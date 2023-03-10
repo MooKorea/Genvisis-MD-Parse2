@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Octokit } from "@octokit/core";
 
 export default function Documentation() {
-  const octokit = new Octokit();
-
+  
   const [MD, setMD] = useState([]);
-
+  
   useEffect(() => {
+    const octokit = new Octokit();
     (async () => {
       const response = await fetch(
         "https://raw.githubusercontent.com/PankratzLab/Genvisis-Docs/main/README.md"
