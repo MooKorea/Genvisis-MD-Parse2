@@ -1,0 +1,16 @@
+main.documentation {
+    @media (min-width: 1200px) {
+        width: 1200px;
+    }
+    padding-inline: 4em;
+    margin-inline: auto;
+    line-height: 1.8em;
+
+    pre {
+        background-color: rgb(214, 214, 214);
+        overflow-x: scroll;
+        padding: 1.5em;
+        border-radius: 0.8em;
+        color: rgb(49, 49, 49);
+    }
+}
