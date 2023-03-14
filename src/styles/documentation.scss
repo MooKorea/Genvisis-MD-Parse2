@@ -1,16 +1,46 @@
 main.documentation {
-    @media (min-width: 1200px) {
-        width: 1200px;
-    }
-    padding-inline: 4em;
-    margin-inline: auto;
-    line-height: 1.8em;
+  @media (min-width: 1200px) {
+    width: 1200px;
+  }
+  padding-inline: 4em;
+  margin-inline: auto;
+  line-height: 1.8em;
 
-    pre {
-        background-color: rgb(214, 214, 214);
-        overflow-x: scroll;
-        padding: 1.5em;
-        border-radius: 0.8em;
-        color: rgb(49, 49, 49);
+  pre {
+    background-color: rgb(214, 214, 214);
+    overflow-x: scroll;
+    padding: 1.5em;
+    border-radius: 0.8em;
+    color: rgb(49, 49, 49);
+  }
+
+  .block {
+    background-color: #d9dde2;
+    border-radius: 0.4em;
+    overflow: hidden;
+    margin-block: 0.8em;
+    p {
+      margin-left: 0.7em;
     }
+  }
+
+  .NoteHeader,
+  .SeeAlsoHeader,
+  .WarningHeader {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding-left: 0.7em;
+    padding-block: 0.2em;
+  }
+
+  .NoteHeader {
+    background-color: $noteCol;
+  }
+  .SeeAlsoHeader {
+    background-color: $seeAlsoCol;
+  }
+  .WarningHeader {
+    background-color: $warningCol;
+  }
 }
