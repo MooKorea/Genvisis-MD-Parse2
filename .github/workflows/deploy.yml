@@ -35,9 +35,27 @@ jobs:
           name: production-files
           path: ./build
 
+
+  compileMD:
+    name: Compile MD
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Move to public directory
+        run: cd public
+
+      - name: Convert MD to HTML
+        run: gh api \
+        --method POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        /markdown \
+        -f text=--input documentation.md
+
   deploy:
     name: Deploy
-    needs: build
+    needs: compileMD
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 

@@ -12,12 +12,13 @@ export default function Documentation() {
     });
     (async () => {
       const response = await fetch(
-        "https://raw.githubusercontent.com/PankratzLab/Genvisis-Docs/main/README.md"
+        "/documentation.md"
       );
       const data = await response.text();
       const githubMD = await octokit.request("POST /markdown", {
         text: data,
       });
+      console.log(githubMD.data)
       const blockQuoteRegexStart = /(<blockquote[^>]+>|<blockquote>)/g;
       const blockQuoteRegexEnd = /(<\/blockquote>)/g;
       const newDataStart = githubMD.data.replace(
