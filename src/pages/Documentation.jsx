@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOMServer from 'react-dom/server';
-import { Octokit } from "@octokit/core";
 
 export default function Documentation() {
   const [MD, setMD] = useState([]);
