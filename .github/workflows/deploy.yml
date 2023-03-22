@@ -43,6 +43,7 @@ jobs:
 
     steps:
       - name: Convert MD to HTML
+        working-directory: ./app
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
