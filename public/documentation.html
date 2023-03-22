@@ -1,0 +1,2470 @@
+<h2><a id="user-content-step-by-step" class="anchor" aria-hidden="true" href="#step-by-step"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step-by-Step</h2>
+<h2><a id="user-content-instructions" class="anchor" aria-hidden="true" href="#instructions"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instructions</h2>
+<h2></h2>
+<h2><a id="user-content-table-of-contents" class="anchor" aria-hidden="true" href="#table-of-contents"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of Contents</h2>
+<p>[TOC]</p>
+<blockquote>
+<p>This is a block quote</p>
+</blockquote>
+<blockquote>
+<p>NOTE This is a note</p>
+</blockquote>
+<blockquote>
+<p>SEEALSO This is a block of content to link to further reading</p>
+</blockquote>
+<blockquote>
+<p>WARNING This is a warning
+another line</p>
+</blockquote>
+<p>&lt;IGNORE-END&gt;</p>
+<h2><a id="user-content-required-raw-data-files" class="anchor" aria-hidden="true" href="#required-raw-data-files"><span aria-hidden="true" class="octicon octicon-link"></span></a>Required Raw Data Files</h2>
+<h3><a id="user-content-for-affymetrix-data-affy6axiom" class="anchor" aria-hidden="true" href="#for-affymetrix-data-affy6axiom"><span aria-hidden="true" class="octicon octicon-link"></span></a>For Affymetrix Data (Affy6/Axiom)</h3>
+<ul>
+<li>.CEL files (one per sample, may be gzipped as .CEL.gz)</li>
+<li>Affymetrix Annotation file (*.annot.csv) aka Manifest</li>
+<li>(optional) Affymetrix Probe Set file (*.probe_tab)</li>
+</ul>
+<h3><a id="user-content-for-illumina-gwas-array-data" class="anchor" aria-hidden="true" href="#for-illumina-gwas-array-data"><span aria-hidden="true" class="octicon octicon-link"></span></a>For Illumina GWAS Array Data</h3>
+<p><strong>Option 1 (preferred)</strong></p>
+<p>Start with raw intensity data and <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=kix.rnqrxmj63otl" rel="nofollow">recluster using GenomeStudio</a>. This option requires</p>
+<ul>
+<li>.idat files (several files per sample)</li>
+<li>.bpm file (the binary manifest file for the array that was used)</li>
+</ul>
+<p><strong>Option 2 (next best)</strong></p>
+<p>Start with a GenomeStudio Project and <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=kix.rnqrxmj63otl" rel="nofollow">recluster using GenomeStudio</a>. This option requires</p>
+<ul>
+<li>A BeadStudio/GenomeStudio (.bsc file)</li>
+<li>The contents of the GenomeStudio Data/ directory</li>
+<li>The corresponding manifest file for the array (.bpm or .csv format)</li>
+</ul>
+<p><strong>Option 3 (last resort)</strong></p>
+<p>Use existing Illumina Final Report files. This option requires</p>
+<ul>
+<li>Final Report files with one or multiple samples per file. At a minimum, they must contain the following columns:
+<ul>
+<li>SNP Name</li>
+<li>Sample ID</li>
+<li>GC Score</li>
+<li>Allele1 - AB</li>
+<li>Allele2 - AB</li>
+<li>X</li>
+<li>Y</li>
+<li>(optional, but helpful) B Allele Freq</li>
+<li>(optional, but helpful) Log R Ratio</li>
+</ul>
+</li>
+<li>The corresponding manifest file for the array (.bpm or .csv format) \</li>
+</ul>
+<h2><a id="user-content-quick-reference" class="anchor" aria-hidden="true" href="#quick-reference"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Reference</h2>
+<h3><a id="user-content-genvisis-downloads" class="anchor" aria-hidden="true" href="#genvisis-downloads"><span aria-hidden="true" class="octicon octicon-link"></span></a>Genvisis Downloads</h3>
+<p>Download the latest version of Genvisis here: <a href="genvisis.umn.edu/jar">genvisis.umn.edu/jar</a>.</p>
+<h3><a id="user-content-genvisis-workflow-checklist" class="anchor" aria-hidden="true" href="#genvisis-workflow-checklist"><span aria-hidden="true" class="octicon octicon-link"></span></a>Genvisis Workflow Checklist</h3>
+<p>The Genvisis workflow depends on the platform of your original data and on the type of data processing to be done. Answer the questions in this <a href="https://docs.google.com/spreadsheets/d/13UiuQTENXxItftdjhUf7JGbgb1xXyBPzDyqvFSM1_08/edit#gid=0" rel="nofollow">interactive checklist</a> to obtain the specific workflow for your project. Additionally, you can save a copy of this checklist and use it to keep track of your progress.</p>
+<h3><a id="user-content-files-for-a-new-genvisis-project" class="anchor" aria-hidden="true" href="#files-for-a-new-genvisis-project"><span aria-hidden="true" class="octicon octicon-link"></span></a>Files for a New Genvisis Project</h3>
+<ul>
+<li>
+<strong>00src/</strong>
+<ul>
+<li>Directory containing GenomeStudio FinalReport files for Illumina data or CEL files for Affymetrix data</li>
+</ul>
+</li>
+<li>
+<strong>data/<a href="#bookmark=id.3wqz7fyhw1k7">pedigree.txt</a></strong>
+<ul>
+<li>Identical to a plink.fam file</li>
+<li>For some projects everyone will be listed as unrelated</li>
+</ul>
+</li>
+<li>
+<strong>data/<a href="#bookmark=id.3wqz7fyhw1k7">linker.txt </a></strong>
+<ul>
+<li>Text file that maps the Sample ID in Illumina’s GenomeStudio or Affymetrix Power Tools to a family ID (FID) and individual ID (IID)</li>
+<li>Also delineates who is a duplicate</li>
+</ul>
+</li>
+<li>
+<strong>data/batch.txt</strong>
+<ul>
+<li>Optional: If samples were genotyped in batches, this is the way to delineate the groups</li>
+<li>This allows Genvisis to detect whether a batch has such significant batch effects that it should be reclustered by itself</li>
+</ul>
+</li>
+<li>
+<strong>Manifest (Illumina data)</strong>
+<ul>
+<li>.csv version with probe sequences</li>
+<li>Unlocks many important features, but a GenomeStudio <strong>SNP_Map.csv</strong> file can be used instead</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-getting-started" class="anchor" aria-hidden="true" href="#getting-started"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
+<h3><a id="user-content-creating-a-new-project" class="anchor" aria-hidden="true" href="#creating-a-new-project"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a New Project</h3>
+<ol>
+<li>Create a directory for your project (written as <strong>[ProjectDir]</strong> for the rest of this documentation).</li>
+<li>Within <strong>[ProjectDir]</strong>, create a subdirectory for the raw data; internally we use the naming convention <strong>00src</strong> (i.e., <strong>[ProjectDir]/00src</strong>), but this is not mandatory.</li>
+<li>Within <strong>00src</strong>, place either the FinalReport files from GenomeStudio (either <strong>.csv</strong> or <strong>.csv.gz</strong> format) or Affymetrix .CEL files. Only FinalReport or .CEL files should be in this directory. <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=id.2ab481w48low" rel="nofollow">Click here</a> for a tutorial on how to process a project using GenomeStudio. <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=kix.rnqrxmj63otl" rel="nofollow">Click here</a> for a tutorial on how to recluster data using only the high-quality samples as seeds. Best practices recommend reclustering the data, even if the project was already processed through GenomeStudio.</li>
+<li>In <strong>[ProjectDir]</strong>, place
+<ul>
+<li>
+<p>(Illumina only) The <strong>.csv</strong> version of the project’s <strong>manifest file</strong> (with probe sequences)</p>
+</li>
+<li>
+<p><a href="#bookmark=id.3wqz7fyhw1k7"><strong>pedigree.txt</strong> and <strong>linker.txt</strong></a> (within a data subdirectory (i.e., <strong>[ProjectDir]/data</strong>))</p>
+</li>
+<li>
+<p>If your samples were processed in batches, <strong>batch.text</strong> [within a data subdirectory (i.e., <strong>[ProjectDir]/data</strong>)] listing sample IDs and batch names (no header) so Genvisis can control for batch effects. For example:</p>
+<pre><code>  ID001	California
+
+
+  ID002 California
+
+
+  ID003	NBS
+
+
+  ID004	NBS
+
+
+  ID005	COG
+
+
+  ID006	COG
+</code></pre>
+</li>
+<li>
+<p>(Illumina only) If available, the <strong>SNP_Map.csv</strong> file that was produced by GenomeStudio at the same time as the reports. This is necessary only if your manifest does not contain probe sequences.</p>
+</li>
+</ul>
+</li>
+<li>Once the directories are set up and the necessary files are in place, run <strong>genvisis.jar</strong>
+<ul>
+<li>Linux/Mac:
+<ul>
+<li>Open a terminal and run <strong>java -Xmx#g -jar [path]/genvisis.jar</strong>
+</li>
+<li>#g is the number of gigabytes of memory</li>
+<li>[path] is the location of the genvisis.jar file</li>
+<li>e.g., <strong>java -Xmx24g -jar ~/genvisis.jar</strong> (if <strong>genvisis.jar</strong> is saved in your home directory)</li>
+<li>Alternatively, locate **genvisis.jar **within a file manager and double-click on</li>
+<li>the Genvisis icon</li>
+</ul>
+</li>
+<li>Windows:
+<ul>
+<li>Open a text file and write inside: <strong>java -Xmx#g -jar genvisis.jar</strong>
+</li>
+<li>#g is the number of gigabytes of memory</li>
+<li>Save the text file as **vis.bat **in the same directory as <strong>genvisis.jar</strong>
+</li>
+<li>Double-click <strong>vis.bat</strong>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In the Genvisis window that opens, click <strong>File</strong> → <strong>New Project</strong>
+</li>
+<li>Enter a <strong>Project Name</strong>
+</li>
+<li>Click <strong>...</strong> next to <strong>Project Directory</strong>
+</li>
+<li>Choose the <strong>[ProjectDir]</strong> -&gt; <strong>Select</strong>
+</li>
+<li>Click <strong>...</strong> next to <strong>Source File Directory</strong>
+</li>
+<li>Choose the <strong>00src</strong> directory created earlier → <strong>Select</strong>
+</li>
+<li>Genvisis will automatically detect the number of source files and the extension (eg. .csv, .csv.gz, .CEL, etc.).</li>
+<li>Choose the <strong>Array Type</strong> with which the data was collected:
+<ul>
+<li>ILLUMINA</li>
+<li>AFFY_GW6
+<ul>
+<li>Only SNP probesets</li>
+</ul>
+</li>
+<li>AFFY_GW6_CN
+<ul>
+<li>SNP probesets plus copy number probesets</li>
+</ul>
+</li>
+<li>NGS_WES</li>
+<li>NGS_WGS</li>
+<li>AFFY_AXIOM</li>
+<li>If you choose one of the Affymetrix arrays, there will an additional option, Start From. Select the appropriate option:
+<ul>
+<li>CEL files</li>
+<li>APT results
+<ul>
+<li>Must have the same name as the <strong>Project Name</strong>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Genome Build</strong> allows you to specify which version of the human genome to run the project in (e.g., <strong><a href="https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.26/" rel="nofollow">Genome Reference Consortium Human Build 38</a></strong> aka <strong>GRCh38</strong>).
+<ul>
+<li>Unless there is a specific need to use an older version of the genome, set <strong>Genome Build</strong> to <strong>hg38</strong>, even if the manifest is in an older build. Genvisis can liftover marker positions to <strong>hg38</strong> in the <a href="#bookmark=id.n8xlweakplyx">Create Marker Positions</a> step of the Workflow.</li>
+<li>To determine which version of the genome your data is in, check the <strong>GenomeBuild</strong> column of your manifest.</li>
+</ul>
+</li>
+<li>Select locations for the following files:
+<ul>
+<li><strong>Pedigree file</strong></li>
+<li><strong>Sample ID linker file</strong></li>
+<li><strong>Batch file</strong></li>
+<li>
+<strong>Marker subset file [optional]</strong>
+<ul>
+<li>Used only if you are not analyzing all markers in the manifest</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If using Illumina reports, <strong>Create</strong> will launch the <strong>Validation Review</strong> window. Fields will be automatically populated from the source files.
+<ul>
+<li>
+<strong>Allele 1/2 - Genotype:</strong> These are important when combining data sets from multiple sources. In that case, a reference genome with a reference allele and an alternate allele are necessary. Illumina doesn't use that designation, so the categories used here for Illumina reports don't matter too much (can be forward allele or top allele designations).</li>
+<li>
+<strong>Allele 1/2 - AB:</strong> This is more important than Allele 1/2 - Genotype. The genotype can either be AA, BB, AB, or missing.</li>
+<li>
+<strong>X/Y:</strong> This is intensity data. If you want to do anything with Copy Number Variation calling or review cluster plots, this is necessary. What sets Genvisis apart is its ability to review raw data. X/Y are the most important variables followed by the Allele 1/2 AB genotype.</li>
+<li>
+<strong>B Allele Frequency and Log-R Ratio:</strong> Genvisis can compute these from X and Y, so it's not critical to import these, but you can import them if they're available in the report.</li>
+<li>
+<strong>Confidence:</strong> An optional category that is useful if you have only genotypes and no raw intensity data (X/Y). Defaults to GC score. The confidence score can be used to set a higher threshold than what the GenomeStudio report originally produced.</li>
+</ul>
+</li>
+<li>If the reports don’t have consistent headers, there will be a separate validation review window for each group of reports.</li>
+<li>Click **OK. **A new window will appear: <strong><a href="#bookmark=id.s30o3wuyykva">Genvisis Project Workflow</a></strong>
+</li>
+<li>If using Affymetrix CEL files, there will be no Validation Review and Genvisis will go directly to the Project Workflow.</li>
+<li>Inside <strong>[ProjectDir]</strong>, two new directories will appear: **data/ **and <strong>logs/</strong>. A file named <strong>source_headers.ser</strong> will also appear in <strong>[ProjectDir]</strong>.</li>
+</ol>
+<h3><a id="user-content-pedigree-and-linker-setup" class="anchor" aria-hidden="true" href="#pedigree-and-linker-setup"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pedigree and Linker Setup</h3>
+<p>Genvisis projects require a **pedigree.txt **file containing unique subject ids and a <strong>linker.txt</strong> file that identifies duplicate subjects.</p>
+<ol>
+<li>Create <strong>pedigree.txt</strong> and save this file in <strong>[ProjectDir]/data/</strong>. This file must contain a header and the following columns: <strong>FID	IID	FA	MO	SEX	AFF</strong>
+<ul>
+<li>The structure is identical to the <a href="https://www.cog-genomics.org/plink2/formats#fam" rel="nofollow">plink.fam</a> file format.</li>
+<li>
+<strong>FID</strong> and **IID **are the family and individual IDs.</li>
+<li>
+<strong>FA</strong> is the **IID **of the sample’s father (<strong>0</strong> if parent not in dataset).</li>
+<li>
+<strong>MO</strong> is the **IID **of the sample’s mother (<strong>0</strong> if parent not in dataset).</li>
+<li>
+<strong>SEX</strong> is either <strong>1</strong> for male or <strong>2</strong> for female (if GenomeStudio can’t determine sex and you don’t have phenotype data, use <strong>0</strong> then update the pedigree manually after running the <strong><a href="#bookmark=id.ffdnn8hxfe09">Sex Checks</a></strong> step in Genvisis).</li>
+<li>
+<strong>AFF</strong> or **PHENO <strong>(Affected or Phenotype)</strong> **is <strong>2</strong> (for a case), <strong>1</strong> (for a control), or either <strong>0</strong> or <strong>-9</strong> (for unknown); this column isn’t used much except for PLINK/VCF export and for filtering out markers that have a call rate that differs by this affected status.</li>
+<li>
+<strong>mzTwinID</strong> (monozygotic twins) is an optional final column (any additional columns beyond this will be ignored). The ID number in this column should be the same for both/all samples in a given mzTwin set (e.g. the first set both coded as 1, the second set coded all as 2, etc). For non-mzTwins the column should contain a period.</li>
+<li>If siblings are present in the dataset, but not their parents, dummy IDs can be created in the **IID **column that share **FID **with the siblings. The dummy IDs can then be listed under **FA **and **MO **for the siblings. The dummy IDs do not need to be included in the Linker file.</li>
+<li>Note: the pedigree should be shorter than the total number of samples if duplicates are present. The pedigree should contain only unique IIDs with <strong>Linker.txt</strong> handling duplicate samples.</li>
+</ul>
+</li>
+<li>Create a <strong>Linker.txt</strong> file and save this file in <strong>[ProjectDir]/data/</strong>. This file must contain a header and the following columns: <strong>DNA	FID	IID</strong>
+<ul>
+<li>The **DNA **column must match the <strong>Sample ID</strong> used in GenomeStudio. The GenomeStudio <strong>Sample ID</strong> is used to name the <strong>.sampRAF</strong> files and Genvisis matches the <strong>DNA</strong> column in <strong>Linker.txt</strong> to the <strong>.sampRAFs</strong>.</li>
+<li>**FID **and **IID **can have duplicates, but each **DNA **ID must be unique.</li>
+<li>If making a <strong>Linker.txt</strong> file in Excel, set the format of the columns to **Text **before adding the IDs (the default is <strong>General</strong>, where Excel will guess the format of each value). IDs that are solely numbers will have leading zeros removed by Excel in this situation, which will lead to Genvisis not being able to match those rows in the <strong>Linker.txt</strong> file with the corresponding <strong>.sampRAFs</strong>. It is best to copy <strong>Sample IDs</strong> directly from the GenomeStudio project and not the <strong>Sample_Map.csv</strong> that is produced with reports, as opening <strong>Sample_Map.csv</strong> in Excel automatically removes leading zeros.</li>
+</ul>
+</li>
+<li>Genvisis projects created prior to August 2021 may have issues using linker and pedigree.
+<ul>
+<li>**relationshipChecks.xln **
+<ol>
+<li>This may cause a checksums failure when loading linker or pedigree</li>
+<li>Resolve by re-running GWAS_QC step - it should add a checksum to the first line of the relationshipChecks.xln file</li>
+<li>You may need to remove/back-up your existing relationship checks</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h2></h2>
+<h3><a id="user-content-genvisis-resources" class="anchor" aria-hidden="true" href="#genvisis-resources"><span aria-hidden="true" class="octicon octicon-link"></span></a>Genvisis Resources</h3>
+<ul>
+<li>The first time you create a Genvisis project, **.genvisis/ **will be created in your home directory.
+<ul>
+<li>Linux/Mac: $HOME/.genvisis/</li>
+<li>Windows: C:\Users[username].genvisis\</li>
+</ul>
+</li>
+<li>This directory contains files that are used across Genvisis projects.</li>
+<li>
+<strong>.genvisis/</strong>
+<ul>
+<li><strong>example/</strong></li>
+<li>
+<strong>projects/</strong>
+<ul>
+<li>
+<strong>.properties</strong> files for each project created</li>
+</ul>
+</li>
+<li>
+<strong>resources/</strong>
+<ul>
+<li>
+<strong>Arrays/</strong>
+<ul>
+<li>
+<strong>AffySnp6/</strong>
+<ul>
+<li>Affymetrix arrays and support files</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>CNV/</strong>
+<ul>
+<li>Hidden Markov Model files (.hmm) used in <a href="#bookmark=id.wns2tdqrvkjn">CNV calling</a>.</li>
+</ul>
+</li>
+<li>
+<strong>Genome/</strong>
+<ul>
+<li>Resource files for Human Genome builds hg18, hg19, and hg38</li>
+</ul>
+</li>
+<li>
+<strong>HapMap/</strong>
+<ul>
+<li>Resource files for HapMap samples</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>custom_path</strong>
+<ul>
+<li>The full path of <strong>.genvisis/</strong>
+</li>
+</ul>
+</li>
+<li>
+<strong>Launch.bat</strong>
+<ul>
+<li>Running this file will launch Genvisis on a Windows machine</li>
+</ul>
+</li>
+<li>
+<strong>Launch.command</strong>
+<ul>
+<li>Running this file will launch Genvisis on a Unix/Linux/Mac machine</li>
+</ul>
+</li>
+<li>
+<strong>launch.properties</strong>
+<ul>
+<li>Contains properties used by all Genvisis projects</li>
+<li>Eg. Path to PLINK software, location of <strong>resources/</strong>, location of <strong>projects/</strong>, record of the last project opened, etc.</li>
+</ul>
+</li>
+<li>
+<strong>Launch.sh</strong>
+<ul>
+<li>Running this file will launch Genvisis on a Unix/Linux/Mac machine</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-running-the-genvisis-workflow" class="anchor" aria-hidden="true" href="#running-the-genvisis-workflow"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the Genvisis Workflow</h2>
+<p>Genvisis data processing is run from a workflow of steps that automate best practices. The Genvisis Workflow can be opened from the toolbar (check the <span>Workflow</span> button) or from <strong>Data &gt; Genvisis Project Workflow</strong>.</p>
+<p id="user-content-gdcalert2"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image2.png"><img src="images/image2.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<p><strong>Image of the Genvisis toolbar with Workflow icon highlighted</strong></p>
+<p>The Workflow window lists all the steps that can be run. To run a step, check the box next to the numbered step. Text will turn green for portions of the step that can be run and red for portions that have missing requirements. Higher number steps may not be able to run without earlier steps being run first. Auto-populated file names will be green if they exist and red if they don't exist.</p>
+<p id="user-content-gdcalert3"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image3.png"><img src="images/image3.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<p><strong>Image of the Genvisis Project Workflow dialog box. Green text indicates steps that are ready to be run, while red text indicates steps for which prerequisites have not been met.</strong></p>
+<p>The first four steps of the Workflow vary based on the platform of your original data (Illumina or Affymetrix). The rest of the steps are the same for all datasets.</p>
+<h3><a id="user-content-illumina-data-sets" class="anchor" aria-hidden="true" href="#illumina-data-sets"><span aria-hidden="true" class="octicon octicon-link"></span></a>Illumina Data Sets</h3>
+<ol>
+<li>Create Marker Positions
+<ul>
+<li>This step uses a manifest file to determine where probes lie in the genome</li>
+<li>Choose the <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit?pli=1#bookmark=id.e14mve4bgxmr" rel="nofollow">.csv version of the manifest</a> used to create the original project in GenomeStudio. This file should already be in <strong>[ProjectDir]</strong>
+</li>
+<li>If your manifest is in a different GenomeBuild than the Genvisis project (eg. manifest is **hg37 **and Genvisis was set to **hg38 **during project creation), choose the option <strong>Perform LiftOver to lift manifest positions to project build</strong>.</li>
+</ul>
+</li>
+<li>Parse Sample Files
+<ul>
+<li>Convert the .csv report files into a Genvisis native format</li>
+</ul>
+</li>
+<li>Run Marker BLAST Annotation
+<ul>
+<li>BLAST (Basic Local Alignment Search Tool) aligns probe sequence to the genome. This determines if markers are useful or not, not useful being if a marker aligns to multiple locations on a genome.</li>
+<li>Must provide a manifest with probe sequences</li>
+<li>BLAST will run on the marker positions in <strong>markerPositions.txt</strong>
+</li>
+<li>Part 3 of this step <strong>(optional) Marker positions file to override MarkerSet positions with</strong> is for if you want to BLAST on a different genome build than your project is in
+<ul>
+<li>For example, if the project was created in <strong>hg37</strong> and the positions in <strong>markerPositions.txt</strong> are <strong>hg37</strong>, you can provide an alternative markerPositions file with positions in **hg38 **to this part.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Transpose Data into Marker-Dominant Files
+<ul>
+<li>The **sampRAF **files created in step 2 contain one sample per file. This step creates a copy of the data, but with one marker per file instead. This allows the same marker to be examined for each sample without iterating through every <strong>sampRAF</strong>.</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-affymetrix-data-sets" class="anchor" aria-hidden="true" href="#affymetrix-data-sets"><span aria-hidden="true" class="octicon octicon-link"></span></a>Affymetrix Data Sets</h3>
+<ol>
+<li>Create Marker Positions
+<ul>
+<li>Requires an Affymetrix Manifest file
+<ul>
+<li>
+<strong>.genvisis/resources/Arrays/AffySnp6/GenomeWideSNP_6.na35.annot.csv</strong> will automatically load from the pre-existing Genvisis resources.</li>
+<li>This is an hg19 array</li>
+<li>The array can be lifted over to the human genome version specified at project creation; otherwise, the HG version of a manifest can be found in the header data of the file. To perform the liftover,
+<ol>
+<li>Check 2.1</li>
+<li>Select **HG19 **in 2.2 if using <strong>GenomeWideSNP_6.na35.annot.csv</strong>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Process Affymetrix CEL Files
+<ul>
+<li>Directory with Affy Power Tools executables
+<ul>
+<li>Files beginning with <strong>apt-</strong>, such as <strong>apt-probeset-genotype</strong>
+</li>
+<li>Available at <a href="http://www.affymetrix.com/" rel="nofollow">http://www.affymetrix.com/</a>
+</li>
+</ul>
+</li>
+<li>Directory with Affy Power Tools library files
+<ul>
+<li>Files beginning with <strong>GenomeWideSNP_6</strong>, such as <strong>GenomeWideSNP_6.cdf</strong>
+</li>
+<li>Available at <a href="http://www.affymetrix.com/" rel="nofollow">http://www.affymetrix.com/</a>
+</li>
+</ul>
+</li>
+<li>A target sketch file
+<ul>
+<li>Such as <strong>hapmap.quant-norm.normalization-target.txt</strong>
+</li>
+</ul>
+</li>
+<li>If you are examining mitochondrial DNA copy number, there is an option to use the full affymetrix cdf, which contains more mitochondrial probe sets</li>
+<li>Number of threads</li>
+</ul>
+</li>
+<li>Transpose Marker Files to Sample Files
+<ul>
+<li>Process Affymetrix CEL Files must have been run</li>
+<li>Transposes <strong>.mdRAF</strong> files in <strong>transposed/</strong> to <strong>.sampRAF</strong> files in <strong>samples/</strong>
+</li>
+</ul>
+</li>
+<li>Run Marker BLAST Annotation
+<ul>
+<li>Transpose Marker Files to Sample Files must have been run</li>
+<li>An Affymetrix Probe Set file
+<ul>
+<li>Default value is <strong>GenomeWideSNP_6.probe_tab</strong>
+</li>
+<li>File can be found at <a href="https://www.affymetrix.com/support/technical/byproduct.affx?product=genomewidesnp_6" rel="nofollow">https://www.affymetrix.com/support/technical/byproduct.affx?product=genomewidesnp_6</a>
+</li>
+</ul>
+</li>
+<li>An Affymetrix Annotation file
+<ul>
+<li>Default is <strong>.genvisis/resources/Arrays/AffySnp6/GenomeWideSNP_6.na35.annot.csv</strong>
+</li>
+</ul>
+</li>
+<li>An optional override file for MarkerSet positions</li>
+<li>Number of threads</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-all-data-sets" class="anchor" aria-hidden="true" href="#all-data-sets"><span aria-hidden="true" class="octicon octicon-link"></span></a>All Data Sets</h3>
+<p>Illumina and Affymetrix are processed the same from here on in the workflow.</p>
+<ol start="5">
+<li>
+<p>Compute GCMODEL File</p>
+<ul>
+<li>Computes the guanine and cytosine ontent around a marker. A lot of G's and C's in a row means that a portion of the double helix is more tightly bound and takes more energy to separate due to G and C having 3 hydrogen bonds instead of 2 (as with A and T). Regions with a lot of G's and C's have properties that are detected downstream, such as how tightly something is hybridizing to it, the degree of intensity (X and Y), and is a problem when the sample is of low quality.</li>
+<li>This option computes the average GC content at each location and corrects for it.</li>
+<li>Requires a file that is relative to the genome build (eg. hg18_gc5base.txt) that should automatically download from the Genvisis website. The file downloads to <strong>.genvisis/resources/Genome/</strong>
+</li>
+</ul>
+</li>
+<li>
+<p>Compute Sample QC Metrics</p>
+<ul>
+<li>Opens RAF files one at a time and computes metrics on the samples.</li>
+</ul>
+</li>
+<li>
+<p>Identify Excluded Samples</p>
+<ul>
+<li>Loads <strong>lrr_sd.xln</strong> and filters out low quality samples.</li>
+<li>User sets thresholds for filtering. Defaults are <strong>0.32</strong> for LRR SD, <strong>0.95</strong> for Callrate, and <strong>3</strong> for BAF SD.
+<ul>
+<li>
+<strong>LRR SD:</strong>
+<ul>
+<li>**Phase 2: **Set <strong>LRR SD</strong> to <strong>0.5</strong> for SNP analysis.</li>
+<li>**Phase 3: **Keep **LRR SD **at the default of **0.32 **for CNV analysis</li>
+</ul>
+</li>
+<li>
+<strong>Callrate:</strong>
+<ul>
+<li>
+<strong>0.98</strong> is the standard **Callrate **for Illumina data</li>
+<li>
+<strong>0.95</strong> is the standard **Callrate **for Affymetrix data</li>
+</ul>
+</li>
+<li>
+<strong>BAF SD:</strong>
+<ul>
+<li>Can remain at the default of **3 **for most projects</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Run Sex Checks</p>
+<ul>
+<li>We want to avoid regions on chrX that have homologies on chrY (beyond the pseudoautosomal regions that are already known to be homologous).</li>
+<li>This can be done by
+<ul>
+<li>4.1 providing a file listing one hit wonders (markers that map to one location on a genome and nowhere else)</li>
+<li>4.2 taking information from the BLAST annotation in Step 3</li>
+<li>4.3 checking the box to “Use only X and Y chromosome R values to identify sex discriminating markers”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Generate AB Lookup File</p>
+<ul>
+<li>This step parses the AB alleles from the original genotype. For each of the variants, it matches what nucleotide it predicts the A allele is and what nucleotide the B allele is to determine what is the reference allele and what is the alternate allele.</li>
+<li>Requires <strong>Parse Sample Files</strong> to have been run.</li>
+<li>Will use <strong>Marker BLAST Annotations</strong> if they are available.</li>
+<li>Has the option to take the **SNP_Map.csv **file that GenomeStudio creates with the report files.
+<ul>
+<li>**SNP_Map.csv **is used only in the rare scenario where you have neither probe sequences nor a blast.vcf file. When Genvisis generates a lookup from existing ACGT genotypes and then reclusters a monomorphic marker, the only way to determine the other allele is with <strong>SNP_Map.csv</strong> or a similar file.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Create PLINK Genotype Files</p>
+<ul>
+<li>Option 3.1 uses the <strong>pedigree.txt</strong> file identified during project creation</li>
+<li>If a <strong>pedigree.txt</strong> doesn’t exist, one can be created uses the results of Sex Checks. In this case, check the box for option 3.2.2.</li>
+</ul>
+</li>
+<li>
+<p>Run GWAS QC</p>
+<ul>
+<li>This step runs the PLINK software on the files created in Step 12. It requires a path to a PLINK executable. This could be plink, plink 1.9, or plink2 depending on what version of PLINK you are running.</li>
+<li>The threshold to reject Marker Callrate has a default value of <strong>&lt;0.98</strong> in Illumina projects and <strong>&lt;0.95</strong> in Affymetrix projects.</li>
+<li>The threshold for filtering on Sample Callrate has a default value of <strong>0.95</strong>
+<ul>
+<li>Change to <strong>0.98</strong> for <strong>Illumina</strong> data</li>
+<li>Leave at <strong>0.95</strong> for <strong>Affymetrix</strong>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Run Ancestry Checks</p>
+<ul>
+<li>This step performs homogeneity tests to make sure that the analysis doesn’t pick up on allele frequency differences simply due to the array being used.</li>
+<li>
+<strong>Requires:</strong>
+<ul>
+<li>1: Run GWAS QC Step must have been run or must be selected.</li>
+<li>2.1: If you have self described ancestry, you can include a list of white samples to compare with HapMap samples that are used as anchors. HapMap contains 60 unrelated individuals of European descent, 60 unrelated individuals of Nigerian descent, and 90 unrelated individuals of east Asian descent (45 Japanese and 45 Chinese).</li>
+<li>2.2: If you don’t have self described ancestry, you can instead check the box for part 2.2. Genvisis will estimate which samples have European ancestry and then use the list it generates as putative whites.</li>
+<li>3: Download remotely available PLINK root of HapMap founders.</li>
+<li>4: should use the same PLINK version used in Run GWAS QC.</li>
+<li>5 (optional): is used when SNPs aren’t labeled with rsIDs, but you have a mapping file to identify what rsIDs they align to. HapMap uses only rsID, so if you have no samples with rsIDs, this part is required. Any samples without rsID will be ignored in this part of the analysis.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Annotate Sample Data File</p>
+<ul>
+<li>This step adds additional columns to <strong>data/SampleData.txt</strong>
+</li>
+<li>This step will throw an error if the duplicates identified by PLINK don’t agree with the <strong>linker.txt</strong> duplicates. It’s more likely that a sample list is wrong than PLINK’s algorithms, so <strong>linker.txt</strong> and <strong>pedigree.txt</strong> should be updated to agree with PLINK if an error occurs.</li>
+</ul>
+</li>
+<li>
+<p>Compute Population BAF files</p>
+<ul>
+<li>Requires samples to have been parsed.</li>
+<li>Can provide an optional sample subset file.</li>
+<li>An output file must be specified (default is <strong>data/custom.pfb</strong>).</li>
+</ul>
+</li>
+<li>
+<p>Create Sex-Specific Centroids; Filter PFB file</p>
+<ul>
+<li>Requires Compute Population BAF files step to have been run</li>
+<li>Requires either Sex Checks to have been run or an estimate sex column in <strong>sampleData.txt</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Call CNVs</p>
+<ul>
+<li>Part 1.1 takes an .hmm file, which contains the parameters for a Hidden Markov Model
+<ul>
+<li>The model parameters are stored in <strong>.genvisis/resources/CNV/hhall.hmm</strong>, which Genvisis automatically downloads.</li>
+<li>
+<strong>hhall.hmm</strong> is Genvisis’s default model. There is also <strong>hh550.hmm</strong>, which is for the Illumina 550 array. The PennCNV algorithm was originally written for the 550 array.</li>
+<li>Genvisis uses the same CNV calling algorithm as PennCNV.</li>
+<li>The HM model looks for change states; a change in intensity may indicate a deletion or a duplication.</li>
+<li>In the <strong>hhall.hmm</strong> file are mean and standard deviation values that indicate the number of copies of an allele.</li>
+<li>B1 is for the log R ratio and B2 is for the B allele frequency.</li>
+<li>Values were derived empirically from an array
+<ul>
+<li>-3.5	-0.66	0	100	0.4	0.68</li>
+<li>The six values are for copy number 0 (homozygous deletion), 1, 2 heterozygous, 2 homozygous, 3 (duplication), and 4 (triplication)</li>
+<li>Copy number 2 homozygous is turned off by being set to 100 because values that high will never be seen. hh550.hmm has homozygous set to 0.0.</li>
+</ul>
+</li>
+<li>The .hmm file created in <strong>Step 21: Process CNVs and Create HMM File</strong>, can also be used here to call CNVs a second time with an .hmm file customized to the dataset (the <strong>Create HMM File</strong> step also has an option to recall CNVs automatically).</li>
+</ul>
+</li>
+<li>Part 4: CNV Calling Scope (three options)
+<ul>
+<li>
+<strong>BOTH (default)</strong>
+<ul>
+<li>Calls <strong>AUTOSOMAL</strong> and <strong>SEX CHROMOSOMES</strong>
+</li>
+</ul>
+</li>
+<li>
+<strong>AUTOSOMAL</strong>
+<ul>
+<li>Chromosomes 1 to 22</li>
+</ul>
+</li>
+<li>
+<strong>SEX CHROMOSOMES</strong>
+<ul>
+<li>Chromosomes 23 (X) and 24 (Y)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Filter CNVs</p>
+<ul>
+<li>Default parameters are recommended
+<ul>
+<li>Minimum number of probes for non-homozygous deletion: <strong>15</strong>
+</li>
+<li>Minimum number of probes for homozygous deletion: <strong>3</strong>
+</li>
+<li>Minimum score value: <strong>10</strong>
+</li>
+<li>Only use <strong>Non-Excluded Samples</strong>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Process CNVs and Create HMM File</p>
+<ul>
+<li>
+<em>Option 2.2 Input file with high-quality CNV calls must exist</em>
+<ul>
+<li>Default is <strong>cnvs\filtered.cnv</strong>
+</li>
+</ul>
+</li>
+<li>
+<em>Option 3 Filter input CNV file using default filters</em> uses the default filter criteria from the <strong>Filter CNVs</strong> step. This option isn’t necessary if using <strong>filtered.cnv</strong>.</li>
+<li>
+<em>Option 4 Number of high-quality samples to use</em> defines the number of samples to use in the training algorithm that generates the new .hmm parameters.
+<ul>
+<li>The more samples used, the more fine tuned the parameters are to the dataset and the more accurate CNV calls with these parameters will be.</li>
+<li>However, the more samples used, the more memory is required by the training algorithm</li>
+<li>900GB of memory is recommended for training on 100 samples in order to not receive an out of memory error.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Generate Genotype Mask</p>
+<ul>
+<li>Requires either 1.1 initial CNV calling, 1.2 unfiltered HMM-optimized CNV calls, or 1.3 the intentional decision to not use CNV calls to mask Mendelian Errors.</li>
+<li>Requires either a 2.1 mosaicism file or 2.2 the intentional decision to not use Mosaic Chromosomal Arms to mask Mendelian Errors.</li>
+<li>Requires either CNV calls or Mosaic Chromosomal Arms identified to create the Genotype Mask. Cannot skip both options 1 and 2.</li>
+</ul>
+</li>
+<li>
+<p>Run Marker QC Metrics</p>
+<ul>
+<li>
+<strong>data/pedigree.txt</strong> must have correctly identified parent-offspring pairs before running this step.
+<ul>
+<li>Genvisis generated relationship data can be found in <strong>[ProjectDir]/plink/quality_control_original/genome/plink.genome_relateds.xln</strong>
+</li>
+</ul>
+</li>
+<li>Marker QC can be done on a subset of markers, but the default is to use all markers</li>
+<li>Option 4 allows batch effects to be controlled for in the analysis
+<ul>
+<li>If you submitted a batch file at project creation or in the <strong>Create SampleData.txt File</strong> step, **BATCH **will appear as one of the options that can be selected.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Run Further Analysis QC</p>
+<ul>
+<li>Requires PLINK files to have been created</li>
+<li>Requires either GWAS QC to have been run, or a file of unrelated FID/IID pairs.</li>
+<li>Requires either Ancestry Step to have been run, or a list of samples of European ancestry
+<ul>
+<li>European samples serve as anchors for Hardy-Weinberg equilibrium tests</li>
+</ul>
+</li>
+<li>Requires <strong>sampleData.txt</strong> to have already been annotated (this step adds additional columns to <strong>sampleData.txt</strong>)</li>
+<li>Requires either Marker QC Metrics to have been run or a plain Mendelian Error column in Marker QC results.</li>
+<li>Requires path to a PLINK executable</li>
+<li>Part 7: Defaults to rejecting any marker that is marked as chr0 (&lt;1). Markers without a good match, such as ones that match to more than one location in the genome, get set to chr0.</li>
+<li>Part 9: Default is 0.98. This works for Illumina data. Use 0.95 for Affymetrix data.</li>
+<li>Parts 10-15: Defaults to &lt;1E-7. If you want to keep as many markers as possible, use a genome wide threshold of &lt;5E-8.</li>
+</ul>
+</li>
+<li>
+</li></ol>
+<p>Identify Mosaic Chromosomal Arms</p>
+<pre><code>* Drops markers within Runs of Homozygosity/homozygous-deletion CNV regions.
+* Mosaicism tends to happen in 1% to 2% of the population over 80 years old. There are unlikely to be many in a study with younger individuals unless there is an extreme phenotype such as cancer.
+</code></pre>
+<ol start="23">
+<li>Identify Problematic Markers
+<ul>
+<li>Requires Marker QC Metrics to have been run</li>
+<li>Requires Further Analysis QC to have been run</li>
+<li>Part 3 allows the user to specify a list of markers to exclude in addition to the markers Genvisis classifies as problematic based on Marker QC Metrics and Further Analysis QC results.</li>
+</ul>
+</li>
+<li>Generate Principal Components
+<ul>
+<li>
+<em>Step 4: Output File Path</em> allows the user to choose what suffix the files this step creates will have
+<ul>
+<li>The default value is <strong>PCA_GENVISIS</strong>
+</li>
+<li>For example, files:
+<ul>
+<li>PCA_GENVISIS_baselineMarkers.txt</li>
+<li>PCA_GENVISIS_lrr_sd.txt</li>
+<li>PCA_GENVISIS_markerQC_BATCH_ALLELIC_batchEffects.out</li>
+<li>PCA_GENVISIS_markerQC_BATCH_MISSINGNESS_batchEffects.out</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Create PC-Corrected Project
+<ul>
+<li>This step will create a new Genvisis project where X and Y are transformed based on the nearest genotype cluster using the principal components generated in the previous step. LRR and BAF are then recomputed based on the new X and Y values.</li>
+<li>The button <strong>Review PCs Plot</strong> will show a scatterplot of Singular Value vs number of Principal Components
+<ul>
+<li>As the number of PCs increases, the amount of variation in the data they explain falls. This is described by the Singular Value, which decreases with each additional PC added.</li>
+</ul>
+</li>
+<li>For a more fine grained examination of the two measures, open the file <strong>[ProjectDir]/PCA/PCA_GENVISIS/PCA_GENVISIS.PCs.SingularValues.txt</strong> in Excel.
+<ul>
+<li>There are two columns: <strong>PC</strong> and <strong>Singular Value</strong>
+</li>
+<li>We want to choose a number of PCs close to the point where adding more leads to diminishing returns. This can be measured by the rate at which the singular value decreases.</li>
+<li>In a third column, calculate the difference between each singular value and the proceeding value
+<ul>
+<li>For example =B2-B3</li>
+<li>The first singular value decrease will usually be in the thousands, followed by the hundreds. Find where the difference consistently falls below 50 and then into the single digits. Highlight a group of 20 to 30 cells, and then under the <strong>Home</strong> tab choose <strong>Conditional Formatting &gt; Color Scales</strong>.</li>
+<li>For example:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p id="user-content-gdcalert4"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image4.png"><img src="images/image4.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>    **Image of principal components count and singular values in a Microsoft Excel spreadsheet**
+
+* Part 1.2 takes the same suffix used in Step 25. Genvisis uses this to identify which files to use when making the new project
+* Part 2 is the number of PCs chosen from examining **SinglarValues.txt**
+* Part 4 Condition Type
+    * Put cursor over ? for explanation of each option
+    * Use default **XY** if you’re not sure which to use
+* Sex Chromosome Strategy
+    * Same as above with ? explaining options
+    * Use default **BIOLOGICAL** if not sure
+* This step creates **[ProjectDir]/pcCorrected_#PCs_[correction type]_[sex chr strategy]**
+    * Eg. **pcCorrected_20PCs_XY_BIOLOGICAL**
+* This new subdir contains a new Genvisis project with a **/transposed** dir containing the PC corrected samples. This new project will appear in the upper right corner of the Genvisis GUI.
+    * You can now run this [new project](#bookmark=id.f9nqogg40tlr) up to cnv calling and optimization a second time.
+</code></pre>
+<ol start="26">
+<li>Create Mitochondrial Copy-Number Estimates File
+<ul>
+<li>Skip if you don’t have mitochondrial data</li>
+</ul>
+</li>
+<li>Create VCF Files for Imputation
+<ul>
+<li>Export project data in the form of .vcf files that can be imputed on the <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit?pli=1#bookmark=kix.ao1b7evi7f7z" rel="nofollow">TOPMed Imputation Server</a>.</li>
+<li>1: Chose which samples to export
+<ul>
+<li>1.1: All samples</li>
+<li>1.2: A file of FID/IIDs to keep
+<ul>
+<li>If you want to keep samples regardless of ancestry or quality control</li>
+</ul>
+</li>
+<li>1.3: A file of FID/IIDs to drop
+<ul>
+<li><strong>plink/quality_control/further_analysis_QC/mind_drops.dat</strong></li>
+</ul>
+</li>
+<li>1.4: Drop samples Genvisis identified in <a href="#bookmark=id.izzeb0pvdf4q">Identify Excluded Samples</a>
+</li>
+</ul>
+</li>
+<li>2: Choose which markers to export
+<ul>
+<li>2.1 A file with markers to keep</li>
+<li>2.2 A file with markers to drop
+<ul>
+<li><strong>plink/quality_control/further_analysis_QC/miss_drops.dat</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>3: (optional) Export contig names with ‘chr’ prefix (<strong>HG</strong>) or without (<strong>GRC</strong>)
+<ul>
+<li>Use <strong>HG</strong> or data with <strong>GRCh38/hg38</strong> positions (which will encode chromosomes with the prefix 'chr'; e.g. chr20).</li>
+<li>Use <strong>GRC</strong> or data with <strong>GRCh37/hg19</strong> positions (which will encode chromosomes without a prefix; e.g. 20).</li>
+<li>If the manifest was in <strong>hg19</strong>, but you lifted <strong>markerPositions.txt</strong> to <strong>hg38</strong>, use the <strong>HG</strong> ption.</li>
+</ul>
+</li>
+<li>4: Chromosomes to export
+<ul>
+<li>Options are:
+<ul>
+<li>0: Unknown</li>
+<li>1 to 22: autosomes</li>
+<li>23: X</li>
+<li>24: Y</li>
+<li>25: Pseudoautosomal region or XY</li>
+<li>26: Mitochondrial</li>
+</ul>
+</li>
+<li>The TOPMed Imputation Server will only accept chromosomes 1 to 23.</li>
+</ul>
+</li>
+<li>5: Split by chromosome?
+<ul>
+<li>If yes, will export one file per chromosome</li>
+<li>Otherwise, will export all chromosomes in a single file</li>
+</ul>
+</li>
+<li>6: (optional) Use ClusterFilters when exporting (if they exist)?
+<ul>
+<li>ClusterFilters are created through <a href="#bookmark=id.9sahd1n5px3d">ScatterPlot </a>as a way to re-assign genotypes for specific markers</li>
+</ul>
+</li>
+<li>7: Output file path (relative to project directory) and filename prefix for VCF files</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://docs.google.com/spreadsheets/d/1CkjsouqwAd2LASsXHVUmAt3aV190Q3unYbHXp4qahB4/" rel="nofollow">Dependency table for Workflow steps</a></p>
+<h3><a id="user-content-pc-corrected-project" class="anchor" aria-hidden="true" href="#pc-corrected-project"><span aria-hidden="true" class="octicon octicon-link"></span></a>PC-Corrected Project</h3>
+<ol>
+<li>This is a copy of the original project, but where X and Y are transformed based on the nearest genotype cluster using the number of principal components specified by the user. LRR and BAF are recomputed based on the new X and Y values.</li>
+<li>Creates
+<ul>
+<li>data/
+<ul>
+<li>batch.txt (if present in the parent project)</li>
+<li>import.ser</li>
+<li>linker.txt</li>
+<li>markerdetails.ser</li>
+<li>markers.ser</li>
+<li>pedigree.txt</li>
+<li>SampleData.txt
+<ul>
+<li>DNA</li>
+<li>Batch (if a batch file was used)</li>
+<li>CLASS=Batch (if a batch file was used)</li>
+<li>CLASS=Sex</li>
+<li>CLASS=Estimated Sex;0=Unknown;1=Male;2=Female;3=Klinefelter;4=UPD Klinefelter;5=Mosaic Klinefelter;6=Triple X;7=Mosaic Triple X;8=Turner;9=Mosaic Turner</li>
+<li>Class=ImputedRace;1=White;2=African American;3=Hispanic;4=Asian</li>
+<li>% African</li>
+<li>% Asian</li>
+<li>% European</li>
+<li>mzTwinID</li>
+<li>Aneuploidy</li>
+<li>AnyTrisomy</li>
+<li>AnyLargeMosaicEvent</li>
+<li>numChrsWithEventGreaterThan4</li>
+<li>NumberMosaicEventsDetected</li>
+<li>ProportionGenomeMosaic</li>
+<li>PCA/PCA_GENVISIS/PCA_GENVISISLRR_SD</li>
+<li>PCA/PCA_GENVISIS/PCA_GENVISISGenotype_callrate</li>
+<li>PCA/PCA_GENVISIS/PCA_GENVISISCLASS=Exclude</li>
+</ul>
+</li>
+<li>samples.ser</li>
+</ul>
+</li>
+<li>samples/
+<ul>
+<li>Empty. The first step of the PC-Corrected workflow <strong>Transpose Marker Files to Samples Files</strong> will populate this directory.</li>
+</ul>
+</li>
+<li>scripts/
+<ul>
+<li>.slrm file</li>
+<li>.toml file</li>
+<li>Appears if <strong>Create script with steps to process corrected data and call CNVs?</strong> option is checked in the <strong>Create PC-Corrected Project</strong> step.</li>
+</ul>
+</li>
+<li>transposed/
+<ul>
+<li>Marker dominant <strong>mdRAF</strong> files with recalculated X, Y, LRR, and BAF values.</li>
+</ul>
+</li>
+<li>#_markersThatFailedCorrection.txt
+<ul>
+<li>List of markers that could not be PC-corrected</li>
+</ul>
+</li>
+<li>AB_lookup_parsed.dat</li>
+<li>.csv manifest (Illumina projects only)</li>
+<li>markerPositions.txt</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-pc-corrected-project-workflow" class="anchor" aria-hidden="true" href="#pc-corrected-project-workflow"><span aria-hidden="true" class="octicon octicon-link"></span></a>PC-Corrected Project Workflow</h3>
+<p>Some steps will be flagged as already completed. These are noted below with <strong>Output Already Exists!</strong></p>
+<p><em><span>Underlined steps are required for CNV calling.</span></em> Other steps are optional.</p>
+<ol>
+<li>
+<em><span>Transpose Marker Files to Sample Files</span></em>
+<ul>
+<li>Will create <strong>sampRAF</strong> iles in <strong>/samples</strong>
+</li>
+</ul>
+</li>
+<li>Run Marker BLAST Annotation
+<ul>
+<li><strong>Output Already Exists!</strong></li>
+</ul>
+</li>
+<li><em><span>Compute Sample QC Metrics</span></em></li>
+<li><em><span>Identify Excluded Samples</span></em></li>
+<li>Generate AB Lookup File
+<ul>
+<li><strong>Output Already Exists!</strong></li>
+</ul>
+</li>
+<li>Run Sex Checks</li>
+<li>Create PLINK Genotype Files
+<ul>
+<li><strong>Output Already Exists!</strong></li>
+</ul>
+</li>
+<li>Run GWAS QC
+<ul>
+<li><strong>Output Already Exists!</strong></li>
+</ul>
+</li>
+<li><em><span>Annotate Sample Data File</span></em></li>
+<li>Identify Mosaic Chromosomal Arms</li>
+<li><em><span>Compute Population BAF files</span></em></li>
+<li><em><span>Create Sex-Specific Centroids; Filter PFB file</span></em></li>
+<li>Compute GCMODEL File
+<ul>
+<li><strong>Output Already Exists!</strong></li>
+</ul>
+</li>
+<li>
+<em><span>Call CNVs</span></em>
+<ul>
+<li>Change <strong>8. Output filename</strong> to <strong>cnvs/genvisisPC#.cnv</strong>
+</li>
+</ul>
+</li>
+<li>
+<em><span>Filter CNVs</span></em>
+<ul>
+<li>Change 1.1 to <strong>cnvs/genvisisPC#.cnv</strong>
+</li>
+<li>Change 9 to <strong>cnvs/filteredPC#.cnv</strong>
+</li>
+</ul>
+</li>
+<li>
+<em><span>Process CNVs and Create HMM File</span></em>
+<ul>
+<li>Part 2.2 defaults to <strong>cnvs/genvisis.cnv</strong>. Change to <strong>cnvs/filteredPC#.cnv</strong>.</li>
+<li>Part 6: Output HMM filename change to <strong>hmm/genvisisPC#.hmm</strong>
+</li>
+</ul>
+</li>
+<li>Generate Genotype Mask</li>
+<li>Run Marker QC Metrics</li>
+<li>Run Ancestry Checks</li>
+<li>Run Further Analysis QC</li>
+<li>Identify Problematic Markers</li>
+<li>Create Mitochondrial Copy-Number Estimates File</li>
+<li>Create VCF Files for Imputation</li>
+</ol>
+<h2></h2>
+<h2><a id="user-content-running-genvisis-via-script" class="anchor" aria-hidden="true" href="#running-genvisis-via-script"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running Genvisis Via Script</h2>
+<ol>
+<li>
+<p>Genvisis workflow steps can be run in a high performance computing environment via scripts.</p>
+</li>
+<li>
+<p>In the lower right hand corner of the Workflow window is the button <strong>Export to Text</strong>.</p>
+<ol>
+<li>Clicking this will produce a <strong>.toml</strong> file that lists which Genvisis steps to run and a <strong>.slrm</strong> file for the SLURM (Simple Linux Utility for Resource Management) format in <strong>[ProjectDir]/scripts/</strong>.</li>
+<li>A pop up window will say “GenvisisWorkflow command file written to <strong>[ProjectDir]/scripts/[toml file name]</strong>.” The pop up window will also have a <strong>Copy to Clipboard</strong> button that will copy the path to the <strong>.toml</strong> and <strong>.slrm</strong> files.</li>
+</ol>
+</li>
+<li>
+<p>Here is a sample <strong>.toml</strong> file created for the Run Marker BLAST Annotation step:</p>
+<pre><code>## Genvisis Workflow Command File
+## Genvisis Version: 0.1.16 (interim build f4ee9bb)
+## Created 2022.07.16 at 04:17:21PM
+
+[project]
+file = '/home/userName/projects/SampleProject.properties'
+
+[targets]
+
+ [targets.illumina-blast]
+	manifest = '/home/SampleProject/Phase3/HumanOmniExpressExome-8-v1-1-C'
+	positionOverrides = ''
+	threads = 24
+</code></pre>
+</li>
+<li>
+<p>The associated <strong>.slrm</strong> file:</p>
+<pre><code>#!/bin/bash
+#$ -cwd
+#$ -S /bin/bash
+#SBATCH --error=%x.%j.e
+#SBATCH --output=%x.%j.o
+#SBATCH --mail-type=END,FAIL
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --mem 100G
+#SBATCH --time=24:00:00
+echo "start GenvisisWorkflow.SampleProject.2022.07.16_04_17_21PM at: " `date`
+echo "host/node: " `/bin/hostname`
+cd /home/SampleProject/Phase3/
+java -Xmx90G -Djava.awt.headless=true -jar ~/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow "/home/SampleProject/Phase3/scripts/GenvisisWorkflow.SampleProject.2022.07.16_04_17_21PM.toml"
+echo "end GenvisisWorkflow.SampleProject.2022.07.16_04_17_21PM at: " `date`
+</code></pre>
+</li>
+<li>
+<p>SLURM settings:</p>
+<p><strong>error</strong>: name of error file (appends timestamp and submission number to file name)</p>
+<p><strong>output</strong>: name of log file</p>
+<p><strong>mail-type</strong>: email the user when either the job successfully ends or fails</p>
+<p><strong>N</strong>: number of nodes</p>
+<p><strong>n</strong>: number of processors per node</p>
+<p><strong>mem</strong>: memory requested</p>
+<p><strong>time</strong>: walltime requested</p>
+</li>
+<li>
+<p>In <strong>java -Xmx90G -jar ~/genvisis.jar</strong>, notice we request 90GB of RAM for Genvisis while above in <strong>#SBATCH --mem=100gb</strong>, we request 100GB from the node. Genvisis automatically lowers the amount of memory reserved for Java by 10% of the total memory request to provide overflow space for any meta-tasks that may need to occur beyond the specific Genvisis step. <strong>-Xmx#</strong> can be edited as the user sees fit relative to their environment and data needs.</p>
+</li>
+<li>
+<p>Submit the <strong>.slrm</strong> file using:</p>
+<pre><code>sbatch -p partionName fileName.slrm
+</code></pre>
+</li>
+<li>
+<p>If you receive the error message <strong>script is written in DOS/Windows text format</strong> when trying to submit the job (due to generating the .slrm file on a PC and then moving it to an HPC environment), you’ll need to convert the file with <strong>dos2unix</strong>:</p>
+<pre><code>dos2unix [fileName].slrm
+</code></pre>
+</li>
+<li>
+<p>After submitting your job, you can check on its progress with <strong>squeue -u [userName]</strong> or <strong>squeue -a --me</strong>. Potential status (<strong>ST</strong>) codes are:</p>
+<p>CD - Completed; The job has completed successfully.</p>
+<p>CG - Completing; The job is finishing but some processes are still active.</p>
+<p>F - Failed; The job terminated with a non-zero exit code and failed to execute.</p>
+<p>PD - Pending; The job is waiting for resource allocation. It will eventually run.</p>
+<p>PR - Preempted; The job was terminated because of preemption by another job.</p>
+<p>R - Running; The job currently is allocated to a node and is running.</p>
+<p>S - Suspended; A running job has been stopped with its cores released to other jobs.</p>
+<p>ST - Stopped; A running job has been stopped with its cores retained.</p>
+</li>
+<li>
+<p>To cancel a job, use <strong>scancel [jobIdNumber]</strong></p>
+</li>
+</ol>
+<h2></h2>
+<h2><a id="user-content-running-genvisis-from-the-command-line" class="anchor" aria-hidden="true" href="#running-genvisis-from-the-command-line"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running Genvisis From the Command Line</h2>
+<p>Help for specific Genvisis steps can be found by running:</p>
+<pre><code>    java -jar genvisis.jar org.genvisis.cnv.filesys.[stepName] -h 
+    # or
+    java -jar genvisis.jar org.genvisis.cnv.filesys.[stepName]
+</code></pre>
+<p>To view what commands Genvisis can use from the command line, run:</p>
+<pre><code>    java -jar genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow
+</code></pre>
+<p>This command yields:</p>
+<pre><code>    1)  java -jar ~/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow [CONFIG FILE]
+    2)  java -jar ~/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow check [CONFIG FILE]
+    3)  java -jar ~/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow targets [PROJECT PROPERTIES FILE]
+    4)  java -jar ~/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow create [PROJECT PROPERTIES FILE] [TARGET ID ... ]
+    5)  java -jar ~`/genvisis.jar org.genvisis.cnv.workflow.GenvisisWorkflow [TARGET ID] [PROJECT PROPERTIES FILE]
+
+    Option 1) Run Genvisis Workflow using the given config file
+    Option 2) Check if a given workflow file can be run
+    Option 3) List which targets are available for a given project
+    Option 4) Create a config file for the given project and include default arguments for any specified targets
+    Option 5) Print out the target key and default arguments, which can be customized and added to a config file
+</code></pre>
+<p>[CONFIG FILE] is a .toml file.</p>
+<h2></h2>
+<h2><a id="user-content-import-an-existing-project-into-genvisis" class="anchor" aria-hidden="true" href="#import-an-existing-project-into-genvisis"><span aria-hidden="true" class="octicon octicon-link"></span></a>Import an Existing Project Into Genvisis</h2>
+<ol>
+<li>
+<strong>File</strong> → <strong>Import Project</strong>
+</li>
+<li>The <strong>Genvisis Project Import</strong> pop-up window will appear. There will be a list of requirements with red x’s next to them</li>
+<li>Click <strong>…</strong> next to <strong>Project Directory</strong>
+</li>
+<li>Choose the directory of an existing project and click <strong>Select</strong>
+</li>
+<li>
+<strong>New Project Name</strong> will now contain the name of the project. The red x’s will turn green if nothing is missing.</li>
+<li>Click <strong>OK</strong> to load the project.</li>
+</ol>
+<h2></h2>
+<h2><a id="user-content-toolbar" class="anchor" aria-hidden="true" href="#toolbar"><span aria-hidden="true" class="octicon octicon-link"></span></a>Toolbar</h2>
+<ol>
+<li>File
+<ul>
+<li>New Project</li>
+<li>Import Project</li>
+<li>Select Project</li>
+<li>Delete Project</li>
+<li>Project Properties Editor</li>
+<li>Open Project Directory</li>
+<li>Preferences</li>
+<li>Check for updates</li>
+<li>Exit</li>
+</ul>
+</li>
+<li>Data
+<ul>
+<li>Audit Linker and Pedigree files</li>
+<li>Audit Samples and Markers (generate paragraph)</li>
+<li>Map .csv files to IDs</li>
+<li>Add data to SampleData</li>
+<li>Genvisis Project Workflow</li>
+</ul>
+</li>
+<li>Quality
+<ul>
+<li>Scan for CNPs</li>
+<li>Filter marker metrics</li>
+<li>Tally marker annotations</li>
+<li>Tally without determining dropped markers (much faster)</li>
+<li>Tally all clustered markers</li>
+</ul>
+</li>
+<li>Plots
+<ul>
+<li>Scatter Plot</li>
+<li>Trailer Plot</li>
+<li>Comp Plot</li>
+<li>Mosaic Plot</li>
+<li>Ancestry Plot</li>
+<li>Sex Plot</li>
+<li>2D Plot</li>
+<li>QQ Plot</li>
+<li>Forest Plot</li>
+<li>Manhattan Plot</li>
+</ul>
+</li>
+<li>Tools
+<ul>
+<li>Export to PLINK format
+<ul>
+<li>Generates PLINK files using the FID/IID IDs in linker.txt</li>
+<li>Exports only high quality samples and no duplicates</li>
+<li>In contrast, the <a href="#bookmark=id.63l2u3cxpdhk">Create PLINK Files</a> step generates files using a DNA/DNA scheme that the <a href="#bookmark=id.m7fdh7nl2xz0">Run GWAS QC</a> step requires, and includes all samples.</li>
+<li>Inputs
+<ul>
+<li>Pedigree File</li>
+<li>Target Markers FIle
+<ul>
+<li>A list of markers to base the PLINK files on.</li>
+<li>One marker per row.</li>
+<li>Markers in the project, but not in the target file, will be ignored.</li>
+<li>Leave this option blank to use all markers in PLINK file generation.</li>
+</ul>
+</li>
+<li>Cluster Filter File
+<ul>
+<li>The list of cluster filter files is generated from any file ending with “*clusterFilters.ser” in the project’s data/ directory. The clusters can be manually added from within the ScatterPlot module.</li>
+</ul>
+</li>
+<li>AB Lookup File</li>
+<li>Export Filetype
+<ul>
+<li>Export files as text or binary</li>
+</ul>
+</li>
+<li>PLINK Output Fileroot
+<ul>
+<li>Files will be generated with this name.</li>
+<li>Eg. <strong>plink</strong> will generate plink.bim, plink.bed, plink.fam.</li>
+<li>Eg. <strong>plink/subset/plink</strong> will generate a sub directory named subset/ containing plink.bim, plink.bed, plink.fam.</li>
+<li>There is an Overwrite option that will replace pre-existing files with the same name.</li>
+</ul>
+</li>
+<li>GC Cutoff
+<ul>
+<li>The minimum GC quality score for a sample to be exported.</li>
+<li>Default is 0.15.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Export to VCF format [DEPRECATED]</li>
+<li>Export for imputation [DEPRECATED]</li>
+<li>Generate PennCNV files</li>
+<li>Compute MedianLRR for Regions</li>
+<li>Parse raw PennCNV results files</li>
+<li>Parse BPM to CSV file</li>
+<li>Compute custom centroids file</li>
+<li>De Novo CNV</li>
+<li>Export CNVs to Pedfile format</li>
+<li>Parse workbench files</li>
+<li>Principal Components
+<ul>
+<li>Generate Manhattan Plots</li>
+<li>Generate PC crosstabs</li>
+<li>Generate data column matrix</li>
+</ul>
+</li>
+<li>Generate a demo package</li>
+</ul>
+</li>
+<li>Help
+<ul>
+<li>Contents</li>
+<li>Search</li>
+<li>About</li>
+</ul>
+</li>
+</ol>
+<h2></h2>
+<h2><a id="user-content-toolbar-icons" class="anchor" aria-hidden="true" href="#toolbar-icons"><span aria-hidden="true" class="octicon octicon-link"></span></a>Toolbar Icons</h2>
+<h3><a id="user-content-project-properties-editor" class="anchor" aria-hidden="true" href="#project-properties-editor"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Properties Editor</h3>
+<ol>
+<li>All of the parameters for a project are stored in the project properties file.</li>
+<li>This editor allows project properties to be changed.</li>
+<li>
+<strong>.genvisis/projects/</strong> contains <strong>.properties</strong> files for all projects. Project properties can be edited in these files in addition to using the <strong>Project Properties Editor</strong>.</li>
+</ol>
+<h3><a id="user-content-refresh" class="anchor" aria-hidden="true" href="#refresh"><span aria-hidden="true" class="octicon octicon-link"></span></a>Refresh</h3>
+<h3><a id="user-content-genvisis-project-workflow" class="anchor" aria-hidden="true" href="#genvisis-project-workflow"><span aria-hidden="true" class="octicon octicon-link"></span></a>Genvisis Project Workflow</h3>
+<h3><a id="user-content-scatter-plot" class="anchor" aria-hidden="true" href="#scatter-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scatter Plot</h3>
+<p>Samples are plotted in scatter plot format with one plot per marker.</p>
+<p>You can zoom in and out with the scroll wheel of a mouse. Move a zoomed in plot around by holding down right click (Windows) or control-click (Mac).</p>
+<p>Point colors change between autosomal and sex chromosomes for quick identification when scrolling through large numbers of markers. For autosomes, AA is dark blue, AB is red, and BB is purple. On sex chromosomes, AA is green, AB is light blue, and BB is indigo.</p>
+<p>Marker lists can be created, loaded, edited, and deleted under File.</p>
+<p>The first time scatterplot is opened, Genvisis will generate the file <strong>data/exampleScatterPlotMarkers.txt</strong> with 10 random markers in order to have something to display.</p>
+<p>On the right hand side, under <strong>View Controls</strong>, the option <strong>Display Mendelian Errors</strong> will draw lines between samples that have Mendelian errors. Blue is used for mother-offspring and green for father-offspring errors.</p>
+<p>In the upper right hand corner of the screen is a window with four tabs: <strong>Control</strong>, <strong>Centroid</strong>, <strong>GC Adjust</strong>, and <strong>Annotation</strong>.</p>
+<p>In the <strong>Annotation</strong> tab, you can enter a description in the “enter new annotation here” box. It will then be entered into the list of existing annotations with the first letter of the annotation now available as a hotkey, e.g., Monomorphic and Extra heterozygote clusters are default annotations. When viewing a marker, if you hit ‘m’ or ‘e’, the marker will be flagged for that annotation and you’ll automatically move to the next marker. In this way, you can very quickly move through markers, hitting only the annotation shortcuts on the keyboard.</p>
+<p>High quality markers have tight clusters with A/A on the X-axis, B/B on the Y-axis, and A/B in the middle of the plot.</p>
+<p>Once <a href="#bookmark=id.7bgym82y1ze5">Marker BLAST Annotation</a> has been run, the <strong>BLAST Metrics</strong> tab in the lower right hand corner of the window will include data about the marker. This Includes the metrics Has <strong>Perfect Match?</strong>, <strong># Off-Target Alignments</strong>, and <strong># On-Target (mismatched) Alignments (&gt;80.0% match)</strong>.</p>
+<ol>
+<li>Click the button <strong>Show BLAST Results</strong> to load the <strong>BlastViewer</strong>
+<ul>
+<li>The first row in the viewer is the probe sequence that Illumina reported and what nucleotides the A and B alleles are</li>
+<li>The subsequent rows are the results of the BLAST and what locations the sequence is matching to</li>
+<li>When examining off target matches, look at what allele is present. For example, if the off target match has the B allele, the values in the scatterplot will be above the x-axis, which represents the A allele.</li>
+<li>If the off target matches are a mixture of both alleles (multiple off target matches), the data will be offset from both axes</li>
+<li>Complementary nucleotides can appear as alleles in off target matches since they share the same fluorescent tag as the known allele. For example, C is the alternate allele and an off target match lists G as the allele.</li>
+</ul>
+</li>
+<li>In the Scatter Plot window, click <strong>File -&gt; New Marker List</strong>. This produces a pop up window where you can paste marker IDs and limit the scatterplots shown to just those instead of thousands. The list of IDs must be saved to a dir with <strong>File name (full path):</strong> in order to use them.
+<ul>
+<li>To add markers to an existing list, use <strong>File -&gt; Edit Existing Marker List</strong>
+</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-trailer-plot" class="anchor" aria-hidden="true" href="#trailer-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trailer Plot</h3>
+<p>This will load all of the markers for one individual and orient them based on genomic position separated by chromosome. The first plot that loads is the first chromosome of the first sample. In the center will be the sample ID, a blank text box with left and right arrows that is not relevant unless using a region list file, and a text box with right and left arrows identifying the chromosome and the base pairs visible (eg. chr1:1-249,218,902). If you zoom in, the base pairs listed will change to reflect what is present on screen.</p>
+<p>Two plots are visible: Log R Ratio and B Allele Frequency. Both plots will have a gap where there is no data due to the chromosome’s centromere. The center of the Log R Ratio plot is a gray line that is equal to 0. A Log R Ratio of 0 implies a copy number of 2, or a normal copy number (a population normalized average of 0). Markers don’t fall perfectly on the line, but in a normal diploid genotype, we will see a tight standard deviation around 0. Conversely, markers significantly below 0 indicate a deletion and significantly above indicate a duplication. An individual marker can be noisy, so we look for numerous markers in a row before believing there is a deletion or duplication. A SD of 0.1 is good, 0.25 is borderline acceptable, 0.32 to 0.5 is sample failure, and above 0.5 is bad.</p>
+<p>The B Allele Frequency plot shows if there are 0, 1, or 2 copies of the B allele. This is presented as a frequency, or 0, 0.5, or 1. Only those 3 bands are expected in a diploid genotype (AA, AB, or BB). An individual with a deletion will only have a marker at 0 or 1 (either only one B allele or only one A allele). A duplication will appear as 0, 0.33, 0.66, or 1 (AAA, AAB, ABB, or BBB). If more than 4 bands appear, this is probably due to contamination. Two samples mixed together would lead to 4 alleles at each locus, or 5 bands at 0, 0.25, 0.5, 0.75, and 1. More than 5 bands means contamination from more than 2 samples. A weird CNV can cause multiple banding, but if you see the same number of bands genome wide, then it’s contamination.</p>
+<p>We’re not interested in markers near 0 or 1 on the BAF plot, but in between the two. Anything between 0.15 and 0.85 is considered a heterozygous call.</p>
+<p>The BAF and LRR plots should be read in conjunction with each other. If the BAF plot has only two bands at 0 and 1 and the LRR plot shows markers below the median at that location, it’s a deletion. If the LRR plot is centered at the median instead, this is more likely a run of homozygosity and an indication that the subject’s parents were closely related, such as cousins. If the BAF plot shows a split pattern, but the two bands aren’t near 0.33 and 0.66, this can be a mosaic duplication, deletion, or uniparental disomy (UPD), where the subject inherited two chromosomes from the same parent. The alteration is UPD if the median LRR is centered on the line, and mosaic duplication or deletion if above or below. The more cells that have the alteration, the further the two BAF bands will be apart and the easier it will be to tell if the LRR markers are above, on, or below the median line.</p>
+<ol>
+<li>
+<p><strong>File</strong> -&gt; <strong>New Region List File</strong></p>
+</li>
+<li>
+<p>A pop up window appears named:</p>
+<ul>
+<li><strong>Sample IDs with (optional) UCSC regions and comments (tab-separated, one set per line):</strong></li>
+<li>For example:
+<ol>
+<li>202030300404	chr1:55-345	Signs of contamination</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>If a UCSC is not provided, Genvisis assumes you are looking at chr1. It is the largest chromosome and usually representative of the rest.</p>
+</li>
+<li>
+<p>Under <strong>File name (full path):</strong> is a text field with a <strong>…</strong> button. You need to provide a location to save the region list file.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>. The text field in the center of the screen that was blank (and is above the field identifying the chromosome and base pairs visible) will now be populated with index numbers for the region list, e.g. 1 of 24.</p>
+</li>
+<li>
+<p><strong>Show QC</strong> option on the trailer plot toolbar has 3 options:</p>
+<ul>
+<li>Hide QC</li>
+<li>Genome</li>
+<li>Region</li>
+</ul>
+</li>
+<li>
+<p>Choosing Genome or Region will display stats between the two text fields. If you select region, zooming will change the stats as they are for the region visible on the plot.</p>
+</li>
+<li>
+<p>Colors option on the trailer plot toolbar has 3 options:</p>
+<ul>
+<li>Default</li>
+<li>GC content</li>
+<li>custom</li>
+</ul>
+</li>
+<li>
+<p>For GC content, blue is lower GC content and red is higher. Regions with a high GC content have a low intensity on average.</p>
+</li>
+<li>
+<p>If a Log R Ratio plot is wavy, color code it by GC content. If the peaks and values correspond to GC content, you can clean this up with the <strong>Adjustments</strong> option on the toolbar:</p>
+<ul>
+<li>Adjust by GC content</li>
+<li>Adjust with gc parameter file</li>
+</ul>
+</li>
+<li>
+<p>Adjust by GC content will smooth out a wavy plot if that was the issue.</p>
+<p>To add Marker Stats to the Trailer Plot, run:</p>
+</li>
+</ol>
+<pre><code>    java -jar ~/genvisis.jar org.genvisis.cnv.analysis.MarkerStats proj=~/[path to .properties file for project] out=marker_lrr_sd.xln
+</code></pre>
+<h3><a id="user-content-comp-plot" class="anchor" aria-hidden="true" href="#comp-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Comp Plot</h3>
+<p>Displays CNV calls per chromosome. The chromosome and position on it currently displayed are described in the text box in the top center of the window. The chromosome being viewed can be changed with the arrow buttons. Zoom in and out with a mouse scroll wheel. Click and drag the screen to move left or right on the chromosome.</p>
+<p>The lengths of the bars correspond to the lengths of the calls in basepairs.</p>
+<p>On the right is the option <strong>Display Mode</strong>. <strong>Full</strong> shows one sample per line. <strong>Pack</strong> removes the vertical space between calls, so multiple samples can be in the same row. A new row is only used when call share the same positions. <strong>Collapsed</strong> combines calls that are the same size and displays a number on the left end of the bar for how many calls are that length at that location.</p>
+<p>Place the cursor over a call to get information about it. Calls can be opened in Trailer Plot either by clicking on an individual call and choosing <strong>To Trailer: Selected</strong> on the right, or <strong>To Trailer: Visible</strong> to load all calls on screen.</p>
+<p>Multiple CNV call lists can be loaded and displayed at the same time. For example, you might have calls made by a different method on the same samples and want to compare them to what Genvisis produced. Genvisis stores cnv calls in <strong>[ProjectDir]/cnvs/genvisis.cnv</strong>. The calls that Comp Plot uses are listed in the <strong>Project Properties Editor</strong> on the main toolbar. In <strong>Project Properties</strong>, scroll down to the <strong>CNV Files</strong> header and there will be a field called <strong>CNV_FILENAMES</strong>. Click <strong>+</strong> next to it to add additional .cnv files. Then click <strong>Save and Close</strong>. If the new cnv calls do not show up in Comp Plot, it might be necessary to close and relaunch Genvisis.</p>
+<h3><a id="user-content-mosaic-plot" class="anchor" aria-hidden="true" href="#mosaic-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mosaic Plot</h3>
+<ol>
+<li>
+<p>When you place your cursor over a point, the point turns red and all the points that are chromosomes for the same individual turn yellow.</p>
+</li>
+<li>
+<p><strong>File -&gt; Hide Excluded</strong> will remove samples previously marked as excluded from the plot</p>
+</li>
+<li>
+<p>You can sort by chromosome in <strong>Mosaicism.xln</strong>, delete problematic chromosomes, and reload the Mosaic Plot to see it without them included (make a copy of <strong>Mosaicism.xln</strong> before deleting rows).</p>
+</li>
+<li>
+<p>Clicking a point will bring up the sample id, chromosome, and chromosome arm. Clicking on this tag will open <a href="#bookmark=id.97hpoj6puaps">Trailer Plot</a>.</p>
+<ul>
+<li>In the B allele frequency plot, if there are four bands instead of the normal three, the farther apart the center two bands are, the higher the percentage of cells that have the mosaicism event.</li>
+<li>On the Trailer Plot toolbar, <strong>CNV Calls -&gt; Call Mosaicism</strong> will place a red bar parallel to the Log R Ratio and the B Allele Frequency plots where Genvisis calculated mosaicism to be.</li>
+<li>Putting the cursor over the red bar will show the start and stop position, length, and estimate score.</li>
+<li>
+<strong>CNV Calls -&gt; Quantify Mosaicism</strong> - force call region.</li>
+</ul>
+</li>
+<li>
+<p>Whenever you click on a point, its id and chromosome arm are copied to the clipboard
+* These can be pasted into a text file and columns added for color coding points
+* For example	rs2452345	chr19p	1	likely duplication</p>
+<pre><code> 		rs4563456	chr19q 1	likely duplication
+
+
+ 		rs6765550	chr15q	2	deletion of whole chromosome
+
+ * The integers 1 and 2 correspond to colors and are in a third column. The fourth column is for comments.
+ * 1 = black; 2 = blue; 3 = purple; 4 = green; 5 = red; 6 = brown
+ * Name the file **mosaic_colors.txt** and place it in **[ProjectDir]/data** and the mosaic plot will automatically color points.
+</code></pre>
+</li>
+</ol>
+<h3><a id="user-content-ancestryplot" class="anchor" aria-hidden="true" href="#ancestryplot"><span aria-hidden="true" class="octicon octicon-link"></span></a>AncestryPlot</h3>
+<p>Click on raceImputations_step# on the left side of the plot to turn on PC1 and PC2. The HapMap samples are included and color coded (red = European, blue = Yoruban, purple = Chinese, green = Japanese). As the _step# increases, the axes become more level. The ImputedRace button under the x-axis will color the points based on what the predicted ancestry of the individuals is.</p>
+<h3><a id="user-content-sex-plot" class="anchor" aria-hidden="true" href="#sex-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sex Plot</h3>
+<p>This plot shows the median log R ratio value of chrX on the x-axis and the median log R ratio value of chrY on the y-axis. Normal females will have high intensity on the x-axis due to having two X chromosomes and normal males will have high intensity on the y-axis due to having a Y chromosome. Individuals appearing elsewhere on the graph either have a condition such as Klinefelter’s or are noisy data.</p>
+<p>Points in the Sex Plots can be clicked on to open trailer plots, which show every variant on chrX and chrY. The log R ratio plot will show the intensity of markers in relation to a median line. Most of a sex chromosome will have the intensity below the line, but in pseudoautosomal regions, such as the first 2.7 Mb of chrX will have a higher intensity than elsewhere in the chromosome. The B allele frequency plot shows the number of AA, AB, and BB markers. In pseudoautosomal regions, there will be a mixture of all three, as in an autosomal chromosome, because there are two alleles (one from chrX and one from chrY). Elsewhere in a sex chromosome, there are no AB markers.</p>
+<p>Carats on the log R ratio plot (^ or v) represent intensities way above or way below the line. Females will have mostly down carats, or null genotypes, for chrY. Markers that do appear on chrY for female samples are global markers that cross hybridize and are therefore problematic.</p>
+<h3><a id="user-content-2d-plot" class="anchor" aria-hidden="true" href="#2d-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>2D Plot</h3>
+<p>Any text file with two columns can be loaded here and visualized as a scatter plot. If you include a third column named <strong>Sample</strong> with the sample IDs used in the project, you can use the color code options below the scatter plot.</p>
+<h3><a id="user-content-qq-plot" class="anchor" aria-hidden="true" href="#qq-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>QQ Plot</h3>
+<p>QQ plot compares observed <em>p</em>-values from a GWAS to hypothesized <em>p</em>-values. A straight line distribution indicates a close 1:1 correlation. The more observed values deviate from hypothesized values, the more they will curve away from the hypothesized line.</p>
+<p>The lambda from the data is calculated and printed onto the QQ plot. Ideally, lambda should be ~1.0. Deviations, usually at the lower end of <em>p</em>-values, can indicate significant hits. Filtering for rare variants at MAF &lt;5% is best practice.</p>
+<p>Takes as input a file with a header and at least two columns - SNP and <em>p</em>-value:</p>
+<pre><code>    SNP    P-value
+    rs6012681    0.4427
+    rs6012683    0.4384
+    rs6012686    0.4229
+</code></pre>
+<p>The SNP column doesn't need to contain any specific information, such as chromosome or position.</p>
+<p>Alternatively, QQ Plot can take a file with a header and at least three columns - chromosome, position, and <em>p</em>-value:</p>
+<pre><code>    Chr  	Pos  	P-value
+    1   	12541586 0.4427
+    1   	13576290 0.4384
+    2   	11273187 0.4229
+</code></pre>
+<p>The chromosome column must contain integers (eg. <strong>chr1</strong> will cause an error).  This three column file can also be used in <a href="#bookmark=id.ed9dc5ie5xp1">Manhattan Plot</a>.</p>
+<p>The column order in the input files doesn’t matter and there can be additional columns; Genvisis will detect the <em>p</em>-value column.</p>
+<p>A QQ Plot of frequency instead of <em>p</em>-values can be made by not including a <em>p</em>-value column:</p>
+<pre><code>    SNP    Freq
+    rs6012681    0.6873
+    rs6012683    0.0011
+    rs6012686    0.9955
+</code></pre>
+<p>A QQ Plot can also be generated from the command line with:</p>
+<pre><code>    java -jar genvisis.jar org.genvisis.cnv.plots.PlotUtilities results=[input file to parse] qq=TRUE qqMinMAF=0.05
+</code></pre>
+<p>The input file at the command line requires 3 columns - marker name/snp, <em>p</em>-values, and frequency:</p>
+<pre><code>    MarkerName    P-value    Freq
+    chr11:12541586:A:G    0.4427    0.6873
+    chr8:102803998:G:A    0.8713    0.0011
+    chr13:55101557:T:C    0.9473    0.9955
+</code></pre>
+<p>The marker name/snp column either must contain chromosome and position information, or a map file has to be included separately (eg. <code>map=plink.bim</code>). Frequency can also be included in a separate file (eg. <code>freq=plink.frq</code>). The column order in the input files doesn’t matter and there can be additional columns.  The results files from SNPTest (<code>combined.results</code>) or METAL (<code>*_InvVar1.out</code>) can be used as input with no changes necessary.  The output is <strong>[input_file]_ topmed_rebuild_QQ_data_qqPlot_MAF_Filtered.png</strong></p>
+<h3><a id="user-content-forest-plot" class="anchor" aria-hidden="true" href="#forest-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Forest Plot</h3>
+<h3><a id="user-content-manhattan-plot" class="anchor" aria-hidden="true" href="#manhattan-plot"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manhattan Plot</h3>
+<p>Manhattan Plot shows the <em>p</em>-values for variants included in a GWAS. It is helpful as a visual check to see if there are any hits and where any significant regions are, as well as the general distribution of <em>p</em>-values for the data.  The plot displays a threshold of 10<sup>-5</sup> and a significant threshold of 10<sup>-8</sup>.</p>
+<p>Takes as input a file with a header and at least three columns - chromosome, position, and <em>p</em>-value:</p>
+<pre><code>    Chr  	Pos  	P-value
+    1   	12541586 0.4427
+    1   	13576290 0.4384
+    2   	11273187 0.4229
+</code></pre>
+<p>The chromosome column must contain integers (eg. <strong>chr1</strong> will cause an error).  Additional columns in the file will be listed in the <strong>Load File</strong> pop up window with checkboxes next to them (default is off). There is also a <strong>P-Value Filter</strong> (default &lt;= 0.05) and <strong>Select Chrs:</strong> column (default is to load all chromosomes except for Chr0 or unknown chromosomes).</p>
+<p>This three column input file can be used in <a href="#bookmark=id.2hvxgeocmoda">QQ Plot</a> as well.</p>
+<p>A Manhattan Plot can also be generated from the command line with:</p>
+<pre><code>    java -jar genvisis.jar org.genvisis.cnv.plots.PlotUtilities results=[input file to parse] manhattan=true hitwindows=true
+</code></pre>
+<p>The input file at the command line requires 3 columns - marker name/snp, <em>p</em>-values, and frequency:</p>
+<pre><code>    MarkerName    P-value    Freq
+    chr11:12541586:A:G    0.4427    0.6873
+    chr8:102803998:G:A    0.8713    0.0011
+    chr13:55101557:T:C    0.9473    0.9955
+</code></pre>
+<p>The marker name/snp column either must contain chromosome and position information, or a map file has to be included separately (eg. <code>map=plink.bim</code>). Frequency can also be included in a separate file (eg. <code>freq=plink.frq</code>). The column order in the input files doesn’t matter and there can be additional columns.  The results files from SNPTest (<code>combined.results</code>) or METAL (<code>*_InvVar1.out</code>) can be used as input with no changes necessary.  The output is  <strong>[input_file]_topmed_rebuild_Manhattan_data_manPlot.png</strong></p>
+<h2></h2>
+<h2><a id="user-content-workflow-output-and-how-to-interpret-results" class="anchor" aria-hidden="true" href="#workflow-output-and-how-to-interpret-results"><span aria-hidden="true" class="octicon octicon-link"></span></a>Workflow Output and How to Interpret Results</h2>
+<h3><a id="user-content-illumina-data-sets-1" class="anchor" aria-hidden="true" href="#illumina-data-sets-1"><span aria-hidden="true" class="octicon octicon-link"></span></a>Illumina Data Sets</h3>
+<ol>
+<li>Create Marker Positions
+<ul>
+<li>
+<strong>[ProjectDir]/markerPositions.txt</strong>
+<ul>
+<li>This text file contains the name of the probe, the chromosome that the probe is on, and the position of the probe in the chromosome. Probes with chromosome and position set to 0 are considered no longer useful by the supplier of the probes.</li>
+</ul>
+</li>
+<li>Probe names are usually rsID, but can also have GSA-rsID from the GSA array, exmid from Exome Chip content, or #:#.</li>
+</ul>
+</li>
+<li>Parse Sample Files
+<ul>
+<li>
+<strong>[ProjectDir]/samples</strong>
+<ul>
+<li>Contains <strong>.sampRAF</strong>, which are sample dominant files.</li>
+</ul>
+</li>
+<li><strong>[ProjectDir]/ListOfMarkers.txt</strong></li>
+<li><strong>[ProjectDir]/ListOfSamples.txt</strong></li>
+<li>
+<strong>data/markers.ser</strong>
+<ul>
+<li>
+<strong>markers.ser</strong> contains the Marker Detail Set, or information about all markers in the project (eg. what chromosome the marker is on; what position the marker is at). No marker details are contained in the <strong>.sampRAF</strong> files; only marker data unique to each sample is present.</li>
+<li>The markers in the <strong>.sampRAF</strong> files and <strong>markers.ser</strong> are in the same order, which allows marker details to be paired with the markers of a sample. If a <strong>.sampRAF</strong> file or the <strong>markers.ser</strong> file is modified, its checksum will change, and the files will have to be recreated as the order of markers in each file can no longer be assumed.</li>
+</ul>
+</li>
+<li><strong>data/samples.ser</strong></li>
+<li>
+<strong>samples/outliers.ser</strong>
+<ul>
+<li>The <strong>.sampRAF</strong> and <strong>.mdRAF</strong> files are compressed using half-precision floats; values are limited to the range -32 to 32. This leads to a loss of precision at the fourth decimal place, but this doesn't have a meaningful effect on Genvisis analyses. In most Illumina data sets, the X and Y values tend to be in the range 0 to 3. Any values outside of the -32 to 32 range are stored in <strong>outliers.ser</strong> with only a dummy placeholder where that value would have resided in the <strong>.sampRAF</strong> and <strong>.mdRAF</strong> files.</li>
+<li>A hashtable containing the same outlier values is also present at the end of each <strong>.sampRAF</strong> and <strong>.mdRAF</strong> file, which allows <strong>outliers.ser</strong> to be recreated if it ever gets deleted.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run Marker BLAST Annotation
+<ul>
+<li>
+<p><strong>[ProjectDir]/Blasts</strong></p>
+<ul>
+<li>Contains a zipped file for every thread used.</li>
+</ul>
+</li>
+<li>
+<p><strong>[ProjectDir]/data/blast.vcf.gz</strong></p>
+</li>
+<li>
+<p><strong>[ProjectDir]/data/blast.vcf.gz.tbi</strong></p>
+<ul>
+<li>An index of <strong>blast.vcf.gz</strong>
+</li>
+</ul>
+</li>
+<li>
+<p>Data in the <strong>blast.vcf</strong> file can be used to judge the quality of a particular marker.</p>
+</li>
+<li>
+<p><strong>blast.vcf.gz</strong> contains eight columns:</p>
+<ul>
+<li>CHROM - chromosome number</li>
+<li>POS - position</li>
+<li>ID - marker ID</li>
+<li>REF - reference allele</li>
+<li>ALT - alternate allele</li>
+<li>QUAL - quality information</li>
+<li>FILTER - filter information</li>
+<li>INFO
+<ul>
+<li>ALIGNMENT_HISTOGRAM=#
+<ul>
+<li>Number of alignments</li>
+</ul>
+</li>
+<li>BLAST_EVALUE_COUNTS=#
+<ul>
+<li>The confidence BLAST has that it got the right location</li>
+</ul>
+</li>
+<li>MARKER_GC_CONTENT=#
+<ul>
+<li>The percentage of the 50 base pairs that are a G or a C</li>
+<li>0.42 is the average across the genome</li>
+<li>An A binds with a T using two hydrogen bonds, whereas a G binds with a C using three hydrogen bonds. So a region with a higher GC content will lead to tighter bonds and require more energy to break apart. This will affect the amount of DNA that binds to the probe and alter the intensity values that Genvisis uses to call copy number variation.</li>
+</ul>
+</li>
+<li>OFF_T_ALIGNMENTS=#
+<ul>
+<li>Number of off target alignments that are different from what the manifest reported.</li>
+</ul>
+</li>
+<li>ON_T_ALIGNMENTS_NON_PERFECT
+<ul>
+<li>Number of alignments that are are less than 50 perfect matches (e.g., 49 matches and one mismatch).</li>
+</ul>
+</li>
+<li>PERFECT_MATCH
+<ul>
+<li>Lists number of base pairs matched, chromosome matched on, and the position on the chromosome matched</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>A perfect match of 50 for a probe is ideal. If all 50 base pairs match, that indicates that the probe will hybridize to this region of the genome.</p>
+</li>
+<li>
+<p>If the probe sequence matches to multiple locations in the genome or to no locations, then those markers will be set to chr0.</p>
+</li>
+<li>
+<p>The reference and alternate alleles are usually a single nucleotide each. For the chr0 markers, <strong>REF</strong> may be set to N and <strong>ALT</strong> set to two nucleotides if BLAST can’t identify the appropriate reference allele.</p>
+</li>
+<li>
+<p>To quickly identify the percentage of high quality matches, divide the number of high quality lines by the total number of lines.</p>
+<ul>
+<li>
+<p>Linux example</p>
+<pre><code># Number of lines where Off Target and Non-Perfect alignments are null and there is a # perfect match of 50:
+zcat blast.vcf.gz | grep "OFF_T_ALIGNMENTS=\." | grep "ON_T_ALIGNMENTS_NON_PERFECT=\." | grep "PERFECT_MATCH=50" | wc -l
+
+# Total number of lines in the file:
+zcat blast.vcf.gz | wc -l
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Once Marker BLAST Annotation has been run, the <strong>BLAST Metrics</strong> tab in <a href="#bookmark=id.9sahd1n5px3d">Scatter Plot</a> will include data about each marker.</p>
+</li>
+</ul>
+</li>
+<li>Transpose Data into Marker-Dominant Files
+<ul>
+<li>
+<strong>[ProjectDir]/transposed</strong>
+<ul>
+<li>Contains <strong>.mdRAF</strong> files, which are marker dominant files.</li>
+<li>
+<strong>.sampRAF</strong> structure:
+<ul>
+<li>Sample1	Marker1</li>
+<li>Sample1	Marker2</li>
+<li>Sample2	Marker1</li>
+<li>Sample2	Marker2</li>
+</ul>
+</li>
+<li>
+<strong>.mdRAF</strong> structure:
+<ul>
+<li>Marker1	Sample1</li>
+<li>Marker1	Sample2</li>
+<li>Marker2	Sample1</li>
+<li>Marker2	Sample2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>transposed/outliers.ser</strong></li>
+<li>Having data duplicated between sample dominant and marker dominant files allows Genvisis to search files and present data faster depending on whether one sample and all of its markers are being examined (as in <a href="#bookmark=id.97hpoj6puaps">Trailer Plot</a>) or one marker across all samples is being examined (as in <a href="#bookmark=id.9sahd1n5px3d">Scatter Plot</a>).</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-affymetrix-data-sets-1" class="anchor" aria-hidden="true" href="#affymetrix-data-sets-1"><span aria-hidden="true" class="octicon octicon-link"></span></a>Affymetrix Data Sets</h3>
+<ol>
+<li>Create Marker Positions
+<ul>
+<li><strong>markerPositions.txt</strong></li>
+<li><strong>GenomeWideSNP_6.na35.annot.rsLookup.txt</strong></li>
+</ul>
+</li>
+<li>Process Affymetrix CEL Files
+<ul>
+<li>
+<strong>[ProjectDir]/transposed</strong>
+<ul>
+<li>Contains <strong>.mdRAF</strong> files, which are marker dominant files.</li>
+</ul>
+</li>
+<li>
+<strong>transposed/outliers.ser</strong>
+<ul>
+<li>The outlier file tends to be small for Illumina data sets, but Affymetrix projects have much larger values on average. This can increase the number of outliers in a dataset and make it such that **outliers.ser **becomes inefficient and no longer leads to the compression it was designed to achieve. In those cases, Genvisis uses a linear scaling factor (e.g., divide all values by 100) to force nearly all values to be less than 32.</li>
+<li>If Genvisis detects that the default scale factor of 1.0 is not sufficient (too many outliers are being found), then <strong>Parse Samples</strong> (Illumina projects) or <strong>Process Affymetrix CEL Files</strong> (Affymetrix projects) will automatically restart with a larger scaling factor.</li>
+</ul>
+</li>
+<li>See <a href="#bookmark=kix.mud9h5lhzq9x">Transpose Data into Marker-Dominant Files</a> for a detailed explanation of the <strong>.mdRAF</strong> files.</li>
+</ul>
+</li>
+<li>Transpose Marker Files to Sample Files
+<ul>
+<li><strong>[ProjectDir]/samples</strong></li>
+<li><strong>[ProjectDir]/ListOfMarkers.txt</strong></li>
+<li><strong>[ProjectDir]/ListOfSamples.txt</strong></li>
+<li><strong>data/markers.ser</strong></li>
+<li><strong>data/samples.ser</strong></li>
+<li><strong>samples/outliers.ser</strong></li>
+</ul>
+</li>
+<li>Run Marker BLAST Annotation
+<ul>
+<li>
+<strong>[ProjectDir]/Blasts</strong>
+<ul>
+<li>Contains a zipped file for every thread used.</li>
+</ul>
+</li>
+<li><strong>[ProjectDir]/data/blast.vcf.gz</strong></li>
+<li>
+<strong>[ProjectDir]/data/blast.vcf.gz.tbi</strong>
+<ul>
+<li>An index of <strong>blast.vcf.gz</strong>
+</li>
+</ul>
+</li>
+<li>See <a href="#bookmark=kix.da6xe975e607">Run Market BLAST Annotation</a> for a detailed explanation of the BLAST files.</li>
+</ul>
+</li>
+</ol>
+<h3><a id="user-content-all-data-sets-1" class="anchor" aria-hidden="true" href="#all-data-sets-1"><span aria-hidden="true" class="octicon octicon-link"></span></a>All Data Sets</h3>
+<ol start="5">
+<li>Compute GCMODEL File
+<ul>
+<li>
+<strong>[ProjectDir]/data/custom.gcmodel</strong>
+<ul>
+<li>Lists the average GC content for every probe.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Compute Sample QC Metrics
+<ul>
+<li><strong>lrr_sd.xln</strong></li>
+<li>Each row in the file is a sample. Each column is a QC metric.
+<ul>
+<li>LRR_AVG - Average log R ratio or average intensity
+<ul>
+<li>Tells us about the relative amount of DNA compared to other samples</li>
+<li>Log R ratio is population normalized</li>
+</ul>
+</li>
+<li>LRR_SD
+<ul>
+<li>Standard deviation of the LRR average</li>
+<li>If standard deviation is high, this is an indication that it’s a low quality sample</li>
+<li>Start worrying when LRR_SD is above 0.32. Beyond 0.5 is a sample failure.</li>
+</ul>
+</li>
+<li>LRR_SD_-2.0_2.0
+<ul>
+<li>LRR_SD calculated only from markers within the range of -2.0 to 2.0</li>
+</ul>
+</li>
+<li>Genotype_heterozygosity
+<ul>
+<li>Also known as genotype call rate</li>
+<li>Worry if this drops below 0.95 (or below 0.98 in an Illumina dataset because Illumina uses longer probe sequences of 50bp, as opposed to 25bp in Affymetrix, which leads to higher quality intensity and less noise)</li>
+</ul>
+</li>
+<li>LRRMedians per chromosome
+<ul>
+<li>Adds chromosome median_chr# columns for chr0 to chr24</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>audit/ExcludesUsing25lrrsd98callrate3bafsd.xln</strong></li>
+<li>Additional <strong>ExcludesUsing…</strong> files
+<ul>
+<li>An <strong>ExcludesUsing…</strong> file can be imported into GenomeStudio <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=kix.yottty4qdww0" rel="nofollow">to exclude samples</a> for Phase 3 clustering and CNV calling.</li>
+</ul>
+</li>
+<li>
+<strong>audit/ExploreThresholds.out</strong>
+<ul>
+<li>Describes how many samples were excluded under different thresholds and rates the quality of the data set based on this (high quality, low quality, or very low quality).</li>
+</ul>
+</li>
+<li><strong>results/Mosaicism.naive.xln</strong></li>
+<li>**results/Mosaicism.naive.agnostic.xln **</li>
+<li><strong>results/Mosaicism.naive.agnostic.xln.filtered</strong></li>
+<li><strong>results/Mosaicism.naive.forceCall.xlnc</strong></li>
+<li><strong>results/Mosaicism.naive.genomeSummary.xln</strong></li>
+</ul>
+</li>
+<li>Identify Excluded Samples
+<ul>
+<li>Adds two columns to the file <strong>[ProjectDir]/data/SampleData.txt</strong>
+<ul>
+<li>
+<strong>CLASS=EXCLUDE</strong> (0 or 1)</li>
+<li>
+<strong>ExcludeNote</strong> (a description of why the sample was excluded)</li>
+</ul>
+</li>
+<li>
+<strong>[ProjectDir]/audit/ExcludedSamples.xln</strong>
+<ul>
+<li>Contains columns <strong>Sample ID</strong>, <strong>Exclude</strong>, <strong>ExcludeNote</strong>, <strong>LRR_SD</strong>, <strong>Genotype_callrate</strong>, and <strong>BAF1585_SD</strong>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run Sex Checks
+<ul>
+<li><strong>[ProjectDir]/data/SampleData.txt</strong></li>
+<li><strong>[ProjectDir]/results/sexCheck.xln</strong></li>
+<li><strong>[ProjectDir]/results/sexCheck_regions.txt</strong></li>
+<li>Adds the following columns to <strong>SampleData.txt</strong>
+<ul>
+<li>CLASS=Sex</li>
+<li>CLASS=Estimated Sex</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Generate AB Lookup File
+<ul>
+<li><strong>[ProjectDir]/AB_lookup_parsed.dat</strong></li>
+</ul>
+</li>
+<li>Create PLINK Genotype Files
+<ul>
+<li>
+<strong>[ProjectDir]/plink</strong>
+<ul>
+<li>
+<strong>plink.fam</strong>
+<ul>
+<li>FID (Family ID)</li>
+<li>Within Family ID (IID)</li>
+<li>Within Family ID of father (0 if father not in dataset)</li>
+<li>Within Family ID of mother (0 if mother not in dataset)</li>
+<li>Sex Code
+<ul>
+<li>1 = male</li>
+<li>2 = female</li>
+<li>0 = unknown</li>
+</ul>
+</li>
+<li>Phenotype Value
+<ul>
+<li>1 = control</li>
+<li>2 = case</li>
+<li>-9/0/non-numeric = missing data if case/control</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>plink.bed</strong>
+<ul>
+<li>Primary representation of genotype calls at biallelic variants</li>
+</ul>
+</li>
+<li>
+<strong>plink.bim</strong>
+<ul>
+<li>All of the markers in the data set</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Note: The FID and IID columns in the plink files use the id in the DNA column of linker.txt and _not _FID/IID. This is counterintuitive, but is done because Run GWAS QC requires the DNA id to work. The <strong>Export to PLINK</strong> format command under <strong>Tools</strong> will generate files with the expected FID/IID ids.</li>
+<li>The files made in this step contain all samples and all markers. No filtering is performed.</li>
+</ul>
+</li>
+<li>Run GWAS QC
+<ul>
+<li>
+<strong>[ProjectDir]/plink/quality_control/</strong>
+<ul>
+<li>
+<strong>[ProjectDir]/plink/quality_control/marker_qc/</strong>
+<ul>
+<li>Data generated in this directory include files where individuals with more than 20% of the genome not having a valid call are removed, markers with similarly bad problems are removed, allele frequency check, check by missingness (<strong>missingness.imiss</strong> is based on the individual, <strong>missingness.lmiss</strong> is based on the locus or marker), and Hardy-Weinberg equilibrium is computed (hardy.hwe) under the assumption that all individuals are being used. This step determines the minimal set of useful markers and then LD prunes those for relationship and ancestry checks.</li>
+<li>
+<strong>marker_qc/miss_drops.dat</strong>
+<ul>
+<li>A list of markers to drop</li>
+</ul>
+</li>
+<li>
+<strong>marker_qc/miss.out</strong>
+<ul>
+<li>A summary of why they were flagged to be dropped</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>[ProjectDir]/plink/quality_control/sample_qc/</strong></li>
+<li>
+<strong>[ProjectDir]/plink/quality_control/genome/</strong>
+<ul>
+<li>
+<strong>plink.genome</strong>
+<ul>
+<li><a href="https://www.cog-genomics.org/plink2/formats#genome" rel="nofollow">File description</a></li>
+<li>A pairwise comparison of all individuals</li>
+<li>If two individuals are not related, Z0 column should be close to 1.0 (percentage of markers not in the same ancestor)</li>
+<li>If a parent-offspring pair, Z1 expected to be close to 1.0 (meaning one of the two alleles is consistently shared between the individuals)</li>
+<li>For sibling relationship, Z0 = 0.25, Z1 = 0.5, Z2 = 0.25</li>
+<li>Identical twins or a blind duplicate will have Z2 = 1.0 and PI_HAT = 1.0 (the total percentage of the genome that is identical)</li>
+</ul>
+</li>
+<li>
+<strong>plink.genome_relateds.xln</strong>
+<ul>
+<li>A filtered version of plink.genome</li>
+<li>The column <strong>Type</strong> lists relationships, such as duplicate, parent-offspring, or avuncular,grandparent,halfsibs</li>
+<li>Samples that were redone by the original lab usually have _001 and _002 in their IDs, or _redo or _duplicate. Check for this when seeing duplicates.</li>
+<li>The CALLRATE columns are used to determine which of the duplicates are used in the analysis. The smaller the CALLRATE value, the lower the missingness rate. Genvisis chooses the duplicate with the smaller CALLRATE value. The columns FID_KEEP, IID_KEEP, FID_DROP, and IID_DROP identify which samples were kept and which were dropped, respectively.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>[ProjectDir]/plink/quality_control/ld_pruning/</strong></li>
+<li>
+<strong>[ProjectDir]/plink/quality_control/ancestry/</strong>
+<ul>
+<li>Contains the standard PLINK trio of .bed, .bim, and .fam</li>
+<li>These contain a smaller set of markers that have been ld pruned.</li>
+<li>We want markers that are independent, otherwise ld patterns can manifest themselves and principal components will pick up on that.</li>
+<li>
+<strong>unrelateds.txt</strong>
+<ul>
+<li>A list of unrelated samples.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run Ancestry Checks
+<ul>
+<li>
+<strong>[ProjectDir]/plink/quality_control/ancestry/plink.bim_unambiguous.txt</strong>
+<ul>
+<li>A list of unambiguous SNPs (throws out A-T and G-C matches). These are compared to the SNPs in <strong>ancestry/unambiguousHapMap.bim</strong>.</li>
+</ul>
+</li>
+<li>
+<strong>ancestry/combo1.missnp</strong>
+<ul>
+<li>Any SNPs that are missed in the merging of unambiguous SNPs and HapMaps. These are SNPs that are A-C in one and T-G in another. SNPs are automatically flipped in one of the data sets so that they match up.</li>
+</ul>
+</li>
+<li>
+<strong>ancestry/combo2.misssnp</strong>
+<ul>
+<li>Merging is repeated and any SNPs that are still missed go here. SNPs that are still missing at this point are probably a tri-allelic marker (eg. G&gt;A,T or G to A in one dataset and G to T in another). The rsID can be searched on <a href="http://ncbi.nlm.nih.gov/snp" rel="nofollow">dbSNP</a> to verify this.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Annotate Sample Data File
+<ul>
+<li>Adds additional columns to <strong>data/SampleData.txt</strong>
+<ul>
+<li>DuplicateId</li>
+<li>Use</li>
+<li>UseNote</li>
+<li>Use_cnv</li>
+<li>Use_cnvNote</li>
+<li>mzTwinID</li>
+</ul>
+</li>
+<li>Also runs relationship checks and produces:
+<ul>
+<li><strong>[ProjectDir]/relationshipChecks.xln</strong></li>
+<li><strong>discrepantRelationships.xln</strong></li>
+<li><strong>trios.xln</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Compute Population BAF files
+<ul>
+<li><strong>data/custom.pfb</strong></li>
+</ul>
+</li>
+<li>Create Sex-Specific Centroids; Filter PFB file
+<ul>
+<li><strong>data/sexSpecific_Male.cent</strong></li>
+<li><strong>data/sexSpecific_Male.cent.txt</strong></li>
+<li><strong>data/sexSpecific_Female.cent</strong></li>
+<li><strong>data/sexSpecific_Female.cent.txt</strong></li>
+</ul>
+</li>
+<li>Call CNVs
+<ul>
+<li>
+<strong>AUTOSOMAL</strong> Calling Scope:
+<ul>
+<li><strong>[ProjectDir]/cnvs/genvisis.cnv</strong></li>
+</ul>
+</li>
+<li>
+<strong>SEX CHROMOSOMES</strong> Calling Scope:
+<ul>
+<li>
+<strong>cnvs/genvisis_23F.cnv</strong>
+<ul>
+<li>ChrX female</li>
+</ul>
+</li>
+<li>
+<strong>cnvs/genvisis_23M.cnv</strong>
+<ul>
+<li>ChrX male</li>
+</ul>
+</li>
+<li>
+<strong>cnvs/genvisis_24M.cnv</strong>
+<ul>
+<li>ChrY</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Filter CNVs
+<ul>
+<li><strong>[ProjectDir]/cnvs/filtered.cnv</strong></li>
+<li>
+<strong>filtered.cnv.ind.ser.gz</strong>
+<ul>
+<li>An index used in <a href="#bookmark=id.97hpoj6puaps">Trailer Plot</a>.</li>
+</ul>
+</li>
+<li>
+<strong>cnvs/cnvsByLrrSd/</strong>
+<ul>
+<li>Contains <strong>genvisisCnvsByLrrSd.xln</strong>, <strong>filteredCnvsByLrrdSd.xln</strong>, <strong>genvisisCnvsByLrrSd.png</strong>, and <strong>filteredCnvsByLrrdSd.png</strong>
+</li>
+<li>These files list the LRR_SD, LRR_SD_-2.0_2.0, and CNV count for each sample. The .xln files can be loaded into <a href="#bookmark=id.jdj8wh4uno2i">2D Plot</a> to visualize the relationship between LRR_SD and number of CNVs called per sample.</li>
+<li>The .png files are 2D Plots of the CNV counts by LRR_SD for quick reference. Use 2D Plot for higher resolution.</li>
+<li>As the number of CNV calls increases, more are being identified, but there is a tipping point where too many CNV calls are most likely false positives (a rule of thumb is to treat CNV counts &lt; 100 as real).</li>
+<li>The filtered CNV counts can be used to refine the LRR_SD threshold in <strong>Step 8: Identify Excluded samples</strong>, to further improve CNV calling.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Process CNVs and Create HMM File
+<ul>
+<li>
+<strong>[ProjectDir]\hmm\genvisis.hmm</strong>
+<ul>
+<li>Contains average values for all markers with a copy number of 1, 2, etc., giving parameters customized to the data</li>
+</ul>
+</li>
+<li>
+<strong>cnvs\genvisisHMM.cnv</strong> and <strong>cnvs\filteredHMM.cnv</strong>
+<ul>
+<li>If <strong>7: (optional) Call CNVs with new HMM file</strong> was checked</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Generate Genotype Mask
+<ul>
+<li>
+<strong>[ProjectDir]/MendelZeroer/</strong>
+<ul>
+<li><strong>cnv.clst</strong></li>
+<li><strong>cnv.zero</strong></li>
+<li><strong>mosaic.clst</strong></li>
+<li><strong>mosaic.zero</strong></li>
+<li><strong>zeroMap.txt</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run Marker QC Metrics
+<ul>
+<li>Produces output in <strong>[ProjectDir]/results</strong>
+<ul>
+<li>
+<strong>results/markerQualityChecks.xln</strong> contains the quality metrics that were generated and can be used to filter markers as high quality or low quality
+<ul>
+<li>These metrics are based on intensity data. In contrast, PLINK uses Hardy-Weinberg equilibrium.</li>
+<li>This file is useful to check for markers having batch effects
+<ul>
+<li>The column BatchEffect_BATCH_n=# contains <em>p</em>-values from a test of batch effects for each sample
+<ol>
+<li>Eg. If batches are found to have fundamentally different intensities, they can then be reclustered separately</li>
+</ol>
+</li>
+<li>The column DuplicateErrors will be populated if you previously flagged duplicates, and can be used to see how many times a duplicate creates an error and inconsistency between duplicates.</li>
+<li>The column MendelianErrors is used if you have families flagged in the data set.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>results/markerQualityChecks_BATCH_ALLELIC_batchEffects.out</strong>
+<ul>
+<li>Only present if a <a href="#bookmark=id.bq33flkl0d7f">batch file</a> was used.</li>
+<li>Tests allelic batch effects.</li>
+<li>Tests whether frequency is different from one group to another. This performs logistic regression by batch/source (e.g. CBP=1 if not =0).</li>
+<li>Column reports <em>p</em>-value for marker which indicates difference between the batch/source.</li>
+<li>If you find significant <em>p</em>-values, you can view the markers in <a href="#bookmark=id.9sahd1n5px3d">Scatter Plot</a>.
+<ul>
+<li>
+<strong>File</strong> &gt; <strong>New Marker List</strong> &gt; <strong>…</strong> next to the field for <strong>File Name</strong>
+</li>
+<li>Chose a location and name for the marker list and hit <strong>Save</strong>
+</li>
+<li>Copy and paste marker names with significant <em>p</em>-values into the <strong>Marker names</strong> text box.</li>
+<li>The levels set in the Class=Batch/Source column will be present in the <strong>Color code by:</strong> toggles below the scatter plot. Samples can be excluded by clicking source name.</li>
+</ul>
+</li>
+<li>When mixed colors in the middle X-Y plot &gt; seeing a shift (not causing a problem).</li>
+</ul>
+</li>
+<li>
+<strong>results/markerQualityChecks_BATCH_MISSINGNESS_batchEffects.out</strong>
+<ul>
+<li>Only present if a <a href="#bookmark=id.bq33flkl0d7f">batch file</a> was used.</li>
+<li>Tests allelic batch effects.</li>
+<li>Tests if call rate is different by batch/source.</li>
+</ul>
+</li>
+<li>markerQualityChecks.mendel</li>
+<li>combined.criteria</li>
+<li>exclusion.criteria</li>
+<li>review.criteria</li>
+<li>markersToReview.out</li>
+<li>markersToExclude.out</li>
+<li>markersToReviewCombined.out</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Run Further Analysis QC
+<ul>
+<li><strong>[ProjectDir]/plink/quality_control/further_analysis_QC/</strong></li>
+</ul>
+</li>
+<li>Identify Mosaic Chromosomal Arms
+<ul>
+<li>
+<strong>[ProjectDir]/results/Mosaicism.xln</strong>
+<ul>
+<li>Contains two rows per chromosome per sample, one for each arm (eg. chr6p, chr6q)</li>
+<li>If there are no markers on the arm, such as the acrocentric chromosomes (chr13, 14, 15, 21, and 22 p-arms), it won’t produce a row for that arm.</li>
+<li>
+<strong>LRR N</strong> - number of markers with a valid LRR value</li>
+<li><strong>mean LRR</strong></li>
+<li>
+<strong>BAF N</strong> - number of markers with a valid BAF value</li>
+<li>
+<strong>SD of BAF</strong> -</li>
+<li>
+<strong>IQR of BAF</strong> - Interquartile range; difference between 25th and 75th percentiles
+<ul>
+<li>Both BAF columns are measures of dispersion/variance</li>
+</ul>
+</li>
+<li>
+<strong>%Homo</strong> - percentage of homozygosity. Usually high (above 60%), but very high can indicate uniparental disomy or inbreeding leading to runs of homozygosity</li>
+<li>
+<strong>ForcedCallArmPercentMosaicism</strong> - the result of assuming an entire arm is mosaic and then calculating what percentage of cells have the mosaic event
+<ul>
+<li>-1 value if not enough data to make a determination</li>
+</ul>
+</li>
+<li>
+<strong>NumberRegionsDetected</strong> - Number of mosaic events identified</li>
+<li>
+<strong>ProportionArmCalledMosaic</strong> - mosaicism calls are made using the BAF and the detailed results are in <strong>results/Mosaicism.agnostic.xln</strong>
+<ul>
+<li>
+<strong>BpCalledMosaic</strong> and <strong>BpInArm</strong> are the numerator and denominator for <strong>ProportionArmCalledMosaic</strong>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>results/Mosaicism.agnostic.xln</strong>
+<ul>
+<li>Contains results from calling mosaicism on chromosomes based on the B allele frequency</li>
+</ul>
+</li>
+<li><strong>results/Mosaicism.agnostic.xln.filtered</strong></li>
+<li><strong>results/Mosaicism.forceCall.xlnc</strong></li>
+<li><strong>results/Mosaicism.genomeSummary.xln</strong></li>
+<li><strong>results/aneuploidyEvaluation.xln</strong></li>
+<li>This data is visualized with <a href="#bookmark=id.d33cookcydr0">Mosaic Plot</a>.</li>
+</ul>
+</li>
+<li>Identify Problematic Markers
+<ul>
+<li><strong>data/drops.dat</strong></li>
+</ul>
+</li>
+<li>Generate Principal Components
+<ul>
+<li><strong>[ProjectDir]/PCA/PCA_GENVISIS</strong></li>
+</ul>
+</li>
+<li>Create PC-Corrected Project
+<ul>
+<li>
+<strong>[ProjectDir]/pcCorrected_#PCs_[correction type]_[sex chr strategy]</strong>
+<ul>
+<li>Eg. <strong>pcCorrected_20PCs_XY_BIOLOGICAL</strong>
+</li>
+</ul>
+</li>
+<li>This subdirectory contains a new Genvisis project with a <strong>/transposed</strong> dir containing the PC corrected samples.
+<ul>
+<li>X and Y are transformed based on the nearest genotype cluster using the number of principal components specified by the user. LRR and BAF are recomputed based on the new X and Y values.</li>
+</ul>
+</li>
+<li>This new project will appear in the upper right corner of the Genvisis GUI.
+<ul>
+<li>
+<a href="#bookmark=id.f9nqogg40tlr">You can now run this new project up to cnv calling and optimization a second time</a>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Create Mitochondrial Copy-Number Estimates File
+<ul>
+<li>
+<strong>[ProjectDir]/</strong>
+<ul>
+<li>PCA_MITO_wGC.MitoMarkers.RawValues.txt</li>
+<li>PCA_MITO_wGC.MitoMarkers.MarkersUsed.txt</li>
+<li>AllMitoMarkers.txt</li>
+</ul>
+</li>
+<li>
+<strong>[ProjectDir]/PCA/PCA_MITO_wGC/</strong>
+<ul>
+<li>PCA_MITO_wGC.PCs.extrapolated.txt</li>
+<li>PCA_MITO_wGC.PCs.SingularValues.png</li>
+<li>PCA_MITO_wGC.PCs.SingularValues.txt</li>
+<li>PCA_MITO_wGC.PCs.MarkerLoadings.txt</li>
+<li>PCA_MITO_wGC.PCs.txt</li>
+<li>PCA_MITO_wGC.PCs.MarkerReport.txt</li>
+<li>PCA_MITO_wGC.samples.USED_PC.txt</li>
+<li>PCA_MITO_wGC.samples.QC_Summary.txt</li>
+<li>PCA_MITO_wGC_lrr_sd.txt</li>
+<li>PCA_MITO_wGC_markers_ABCallRate.txt</li>
+<li>PCA_MITO_wGC_markerQC_BATCH_MISSINGNESS_batchEffects.out</li>
+<li>PCA_MITO_wGC_markerQC_BATCH_ALLELIC_batchEffects.out</li>
+<li>PCA_MITO_wGC_markerQC.txt</li>
+<li>PCA_MITO_wGC_markerQCtmp#.bonferroni.txt</li>
+<li>PCA_MITO_wGC_markers_to_QC.txt</li>
+<li>PCA_MITO_wGC_baselineMarkers.txt</li>
+</ul>
+</li>
+<li>
+<strong>[ProjectDir]/PCA/PCA_MITO_wGC/PCA_MITO_wGC_GC_ADJUSTMENT</strong>
+<ul>
+<li>default_gc_parameters.GENVISIS_GC.gc_Centroids.ser</li>
+<li>default_gc_parameters.GENVISIS_GC.gc_Centroids_TMP_BAK.ser</li>
+<li>default_gc_parameters.GENVISIS_GC.ser</li>
+<li>gc_Centroids.ser</li>
+<li>custom.gcmodel.ser</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Create VCF Files for Imputation
+<ul>
+<li>
+<strong>export/genvisis/</strong>
+<ul>
+<li>
+<strong>.vcf.gz</strong> and <strong>.vcf.gz.tbi</strong> files for each chromosome selected.</li>
+<li>files that can be analyzed on the <a href="https://docs.google.com/document/d/1BMu1zp8er9NY-QFRh-7ZOeX1HnGj_yAYYh3BarASwPY/edit#bookmark=kix.ao1b7evi7f7z" rel="nofollow">TOPMed Imputation Server</a>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2><a id="user-content-cnv-analysis-pipeline" class="anchor" aria-hidden="true" href="#cnv-analysis-pipeline"><span aria-hidden="true" class="octicon octicon-link"></span></a>CNV Analysis Pipeline</h2>
+<h3><a id="user-content-running-cnv-analysis" class="anchor" aria-hidden="true" href="#running-cnv-analysis"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running CNV Analysis</h3>
+<pre><code>    java -jar ~/plab-internal.jar org.pankratzlab.internal.gwas.CNVAnalysisPipeline -h
+
+    dir=&lt;value&gt;            (required) Root directory, where subdirectories and results will be created.
+
+    mperm=&lt;value&gt;          (required) Number of permutations to run (mperm option in Plink)
+
+    fams=&lt;value&gt;           (required) Plink FAM files, in the format    file1|label1;file2|label2;...;fileN|labelN - if a label is omitted, the label                           will be the filename root
+    
+cnvs=&lt;value&gt;           (required) CNV Files, in the format cnvFile1|cnvLabel1;cnvFile2|cnvLabel2, or               
+    cnvFile1|cnvLabel1{size=&lt;OPERATOR&gt;@&lt;filterSize&gt;,cn=&lt;OPERATOR&gt;@&lt;filterType&gt;}, where OPERATOR is one of &lt;=,&lt;,&gt;=,&gt;,=,!, and &lt;filterSize&gt; and &lt;filterType&gt; are integer values (either may be omitted to only filter on one attribute); if a label is omitted, the label will be the filename root
+
+    override=&lt;value&gt;          Copy FAM and CNV files even if they already exist
+    hits=&lt;value&gt;              Run HitWindows
+    indexThresh==&lt;value&gt;
+    minWinSize==&lt;value&gt;
+    maxWinSize==&lt;value&gt;
+    winThresh==&lt;value&gt;
+    man=&lt;value&gt;               Create a ManhattanPlot
+    qq=&lt;value&gt;                Create a QQPlot
+</code></pre>
+<p><br>
+The defaults are:</p>
+<pre><code>    float indexThreshold = (float) 0.1;
+    int windowMinSizePerSide = 500000;
+    int windowMaxSizePerSide = 100000;
+    float windowExtensionThreshold = (float) 0.99;
+</code></pre>
+<p>If you want to be restrictive, leave the default. If you want to look at everything, use <strong><code>indexThresh=0.99</code></strong>.</p>
+<pre><code>`java -Djava.awt.headless=true -jar ~/plab-internal.jar org.pankratzlab.internal.gwas.CNVAnalysisPipeline dir=./ fams=./plink.fam cnvs=./genvisis.cnv mperm=10000` \
+</code></pre>
+<p><br>
+The pipeline can also do size and CN filtering and re-labeling on the CNV file:</p>
+<pre><code>    "cnvFile1|cnvLabel1{size=&lt;OPERATOR&gt;@&lt;filterSize&gt;,cn=&lt;OPERATOR&gt;@&lt;filterType&gt;}"
+</code></pre>
+<p>Example:</p>
+<pre><code>    java -Djava.awt.headless=true -jar ~/plab-internal.jar org.pankratzlab.internal.gwas.CNVAnalysisPipeline dir=./ fams=./plink.fam "cnvs=./genvisis.cnv{size=&gt;@20,cn=!=@2}" mperm=10000
+</code></pre>
+<p>This will filter the cnvs to size &gt; 20bp and CN != 2.</p>
+<p>Multiple filters can be applied to the same .cnv file:</p>
+<pre><code>    cnvs=cnvFile1|cnvLabel1{size=&lt;OPERATOR&gt;@&lt;filterSize&gt;,cn=&lt;OPERATOR&gt;@&lt;filterType&gt;};cnvFile1|cnvLabel2{size=&lt;OPERATOR&gt;@&lt;filterSize&gt;,cn=&lt;OPERATOR&gt;@&lt;filterType&gt;}
+</code></pre>
+<p>Example:</p>
+<pre><code>    java -Djava.awt.headless=true -jar ~/plab-internal.jar org.pankratzlab.internal.gwas.CNVAnalysisPipeline dir=./cnvAnalysisPipeline/ fams=./mayoVTE.fam "cnvs=./genvisisHMM_SexChrsFiltered.cnv|allVariants{};./genvisisHMM_SexChrsFiltered.cnv|delOnly{cn=&lt;@2};./genvisisHMM_SexChrsFiltered.cnv|homoDelOnly{cn==@0};./genvisisHMM_SexChrsFiltered.cnv|largeVariants{size=&gt;=@100000};./genvisisHMM_SexChrsFiltered.cnv|giantVariants{size=&gt;=@500000}" mperm=10000
+</code></pre>
+<p>This example will create, in a dir called <strong>cnvAnalysisPipeline/</strong>, five .cnvs and a subdir named after the .fam file. In the subdir will be five dirs, each containing the results of the analysis for the particular filter.</p>
+<p>The <strong>fams</strong> parameter can take multiple <strong>.fam</strong> files (ex. females only, males only), but in this case the parameter and all arguments need to be encased in quotes:</p>
+<pre><code>    java -jar ~/plab-internal.jar org.pankratzlab.internal.gwas.CNVAnalysisPipeline dir=./cnvAnalysisPipeline/ "fams=./mayoVTE.fam; ./mayoVTE_F.fam;./mayoVTE_M.fam" "cnvs=./genvisisHMM_SexChrsFiltered.cnv|allVariants{};./genvisisHMM_SexChrsFiltered.cnv|delOnly{cn=&lt;@2};./genvisisHMM_SexChrsFiltered.cnv|homoDelOnly{cn==@0};./genvisisHMM_SexChrsFiltered.cnv|largeVariants{size=&gt;=@100000};./genvisisHMM_SexChrsFiltered.cnv|giantVariants{size=&gt;=@500000}" mperm=10000
+</code></pre>
+<p>** <br>
+**The <strong>.fam</strong> files should only contain case-controls. Remove parents and siblings from the analysis.</p>
+<h3><a id="user-content-analyzing-results" class="anchor" aria-hidden="true" href="#analyzing-results"><span aria-hidden="true" class="octicon octicon-link"></span></a>Analyzing Results</h3>
+<ul>
+<li>
+<strong>conf.cnv.map</strong> lists CNV breakpoints. It matches the structure of the first four columns of a .bim file (chromosome, variant identifier, position in morgans or centimorgans [0 is a dummy value], and base-pair coordinate). The coordinates in the fourth column are the break points, or start and end points of cnvs provided to the analysis.</li>
+<li>
+<strong>confPosition.hits</strong> and <strong>confWindow.hits</strong>
+</li>
+<li>
+<strong>confPosition.cnv.summary.mperm</strong> lists the chromosome and start position of each cnv call along with an uncorrected <em>p</em>-value (<strong>EMP1</strong>) and a Bonferonni corrected_ p_-value (<strong>EMP2</strong>). The <em>p</em>-values indicate if the CNV is seen by chance anywhere in the genome. Only the values of <strong>EMP2</strong> should be considered for analysis.</li>
+<li>Three separate files for ease of viewing in Complot:
+<ul>
+<li>Case only</li>
+<li>Control only</li>
+<li>Family members</li>
+</ul>
+</li>
+<li>Look at differences between case and control by size. Start with 100kb (1000 bp) and move up to 250 kb, 500 kb, 1Mb, 2Mb etc.</li>
+</ul>
+<h3><a id="user-content-visualizing-results" class="anchor" aria-hidden="true" href="#visualizing-results"><span aria-hidden="true" class="octicon octicon-link"></span></a>Visualizing Results</h3>
+<ul>
+<li>
+<p>Create a list of significant regions using the first and last SNPs on a chr that are EMP2 &lt; 0.05. For example:</p>
+<pre><code>chr7:31550705-31552108
+chr10:18550421-18572274
+chr11:54804507-54898271
+chr12:5928665-5930039
+</code></pre>
+</li>
+<li>
+<p>Open CompPlot and load the regions with</p>
+<ul>
+<li>
+<strong>File</strong> -&gt; <strong>Load Region File</strong>
+</li>
+</ul>
+</li>
+<li>
+<p>Only display cnvs from the file used to make the calls.</p>
+</li>
+<li>
+<p>Compute the median log R ratio for the region and view the results in 2D Plot</p>
+<ul>
+<li>
+<strong>Actions</strong> -&gt; <strong>Median LRR</strong> -&gt; <strong>Compute</strong> -&gt; <strong>2D Plot</strong>
+</li>
+<li>This will plot each sample’s median LRR and MAD (median absolute difference) LRR for the region.</li>
+</ul>
+</li>
+</ul>
+<p id="user-content-gdcalert5"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image5.png"><img src="images/image5.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>    **Image of a plot of median LRR vs median absolute difference with three distinct clusters and the copy number 2 cluster is off center from zero.**
+
+
+
+* We want to see a plot like this with clear clusters for copy number 2, heterozygous deletion, and homozygous deletion. Note that CN2 is not centered on 0.0 in this example. We can attempt to correct this in the steps below.
+</code></pre>
+<p id="user-content-gdcalert6"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image6.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image6.png"><img src="images/image6.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>    **Image of a plot of median LRR vs median absolute difference with one noisy cluster**
+
+
+
+* This example has an EMP2 of 0.0008, but there is no clear separation in the data. This is a false positive.
+</code></pre>
+<ul>
+<li>
+<strong>To Trailer</strong> -&gt; <strong>Actions</strong> -&gt; <strong>To ScatterPlot</strong>
+</li>
+<li>On marker plots that are marked unknown, use heat map to identify clusters</li>
+</ul>
+<p id="user-content-gdcalert7"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image7.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image7.png"><img src="images/image7.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>**Image of Scatter Plot showing the heatmap view of a marker with user drawn boxes around genotype clusters**
+</code></pre>
+<ul>
+<li>Manually set clusters to AA (x axis), AB, or BB (Y axis)</li>
+</ul>
+<p id="user-content-gdcalert8"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image8.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image8.png"><img src="images/image8.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>**Image of Scatter Plot showing the Genotype view of a marker with user drawn boxes around genotype clusters**
+</code></pre>
+<ul>
+<li>Close <strong>Scatterplot</strong> &gt; <strong>New cluster filters have been created. Would you like to append them to the permanent file?</strong> &gt; <strong>Yes, overwrite</strong>
+</li>
+<li>Return to CompPlot and repeat <strong>Median LRR</strong>, but with <strong>Recompute LRR</strong> checked</li>
+<li>2D Plot should now show the CN2 cluster centered around 0.0</li>
+</ul>
+<p id="user-content-gdcalert9"><span>&gt;&gt;&gt;&gt;&gt;  gd2md-html alert: inline image link here (to images/image9.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert10">Next alert</a>)<br><span>&gt;&gt;&gt;&gt;&gt; </span></p>
+<p><a target="_blank" rel="noopener noreferrer" href="images/image9.png"><img src="images/image9.png" alt="alt_text" title="image_tooltip" style="max-width: 100%;"></a></p>
+<pre><code>    **Image of a plot of median LRR vs median absolute difference with three distinct clusters and the copy number 2 cluster is centered at zero.**
+</code></pre>
+<ul>
+<li>Recall CNVs
+<ul>
+<li>Add false positive regions to the problematic regions file for the relevant genome build
+<ul>
+<li>Eg. /panfs/roc/groups/5/pankrat2/public/resources/Genome/hg38/problematicRegions_hg38.dat</li>
+</ul>
+</li>
+<li>In the main Genvisis window, run <strong>Tools</strong> &gt; <strong>Compute custom centroids file</strong>
+<ul>
+<li>This creates <strong>data/custom.cent</strong>
+</li>
+</ul>
+</li>
+<li>Call and filter CNVs a second time. The custom centroids file and updated problematic regions file should remove the false positive calls and correctly center the true positives.</li>
+</ul>
+</li>
+</ul>
