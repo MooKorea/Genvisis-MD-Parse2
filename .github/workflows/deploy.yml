@@ -40,10 +40,12 @@ jobs:
     name: Compile MD
     needs: build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
 
     steps:
       - name: Convert MD to HTML
-        working-directory: ./app
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
