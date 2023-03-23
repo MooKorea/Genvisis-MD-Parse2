@@ -47,14 +47,14 @@ jobs:
 
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "public/documentation.txt"
+          FILE_NAME: "public/fileName.txt"
           FILE_DATA: "file content"
         
       - name: Convert MD to HTML
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo hi > public/documentation.txt
+          echo hi > public/fileName.txt
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
