@@ -28,6 +28,8 @@
 [Example bookmark link](#abcd)
 [Another bookmark link](#anchor)
 
+[Existing Header](#pedigree-and-linker-setup)
+
 ## Required Raw Data Files
 
 
