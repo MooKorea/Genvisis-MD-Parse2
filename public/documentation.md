@@ -19,6 +19,9 @@
 > SEEALSO This is a block of content to link to further reading
 
 > WARNING This is a warning
+> line break
+
+> WARNING This is a warning duplicate
 
 &lt;IGNORE-END>
 
