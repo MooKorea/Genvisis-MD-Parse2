@@ -52,7 +52,7 @@ jobs:
         
       - name: Convert MD to HTML
         run: |
-          sudo echo hi > fileName.txt
+          echo hi > fileName.txt
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
