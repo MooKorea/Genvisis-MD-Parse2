@@ -22,6 +22,7 @@
 
 &lt;IGNORE-END>
 
+[Example bookmark link](#abcd)
 
 ## Required Raw Data Files
 
@@ -76,7 +77,7 @@ Use existing Illumina Final Report files. This option requires
 
 
 
-
+<a name="abcd"></a>
 
 ## Quick Reference
 
