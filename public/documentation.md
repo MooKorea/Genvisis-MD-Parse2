@@ -14,7 +14,7 @@
 
 > This is a block quote
 
-> NOTE I am bread
+> NOTE I am bread.
 
 > SEEALSO This is a block of content to link to further reading
 
