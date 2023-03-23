@@ -14,11 +14,10 @@
 
 > This is a block quote
 
-> NOTE This is a note
+> NOTE I am bread
 
 > SEEALSO This is a block of content to link to further reading
-> SEEALSO This is a block of content to link to further reading
-> SEEALSO This is a block of content to link to further reading
+
 > SEEALSO This is a block of content to link to further reading
 
 > WARNING This is a warningWARNING This is a warningWARNING This is a warning
