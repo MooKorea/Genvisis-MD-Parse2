@@ -40,9 +40,6 @@ jobs:
     name: Compile MD
     needs: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: public
 
     steps:
       - name: Checkout
@@ -55,7 +52,7 @@ jobs:
         
       - name: Convert MD to HTML
         run: |
-          echo hi > fileName.txt
+          sudo echo hi > fileName.txt
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
