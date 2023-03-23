@@ -50,8 +50,12 @@ jobs:
 
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "dir/fileName.txt"
+          FILE_NAME: "public/fileName.txt"
           FILE_DATA: "file content"
+        
+      - name: Convert MD to HTML
+        run: |
+          echo hi > fileName.txt
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
