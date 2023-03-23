@@ -773,20 +773,22 @@ line break</p>
 </ul>
 </li>
 <li>
-</li></ol>
 <p>Identify Mosaic Chromosomal Arms</p>
-<pre><code>* Drops markers within Runs of Homozygosity/homozygous-deletion CNV regions.
-* Mosaicism tends to happen in 1% to 2% of the population over 80 years old. There are unlikely to be many in a study with younger individuals unless there is an extreme phenotype such as cancer.
-</code></pre>
-<ol start="23">
-<li>Identify Problematic Markers
+<ul>
+<li>Drops markers within Runs of Homozygosity/homozygous-deletion CNV regions.</li>
+<li>Mosaicism tends to happen in 1% to 2% of the population over 80 years old. There are unlikely to be many in a study with younger individuals unless there is an extreme phenotype such as cancer.</li>
+</ul>
+</li>
+<li>
+<p>Identify Problematic Markers</p>
 <ul>
 <li>Requires Marker QC Metrics to have been run</li>
 <li>Requires Further Analysis QC to have been run</li>
 <li>Part 3 allows the user to specify a list of markers to exclude in addition to the markers Genvisis classifies as problematic based on Marker QC Metrics and Further Analysis QC results.</li>
 </ul>
 </li>
-<li>Generate Principal Components
+<li>
+<p>Generate Principal Components</p>
 <ul>
 <li>
 <em>Step 4: Output File Path</em> allows the user to choose what suffix the files this step creates will have
@@ -805,7 +807,8 @@ line break</p>
 </li>
 </ul>
 </li>
-<li>Create PC-Corrected Project
+<li>
+<p>Create PC-Corrected Project</p>
 <ul>
 <li>This step will create a new Genvisis project where X and Y are transformed based on the nearest genotype cluster using the principal components generated in the previous step. LRR and BAF are then recomputed based on the new X and Y values.</li>
 <li>The button <strong>Review PCs Plot</strong> will show a scatterplot of Singular Value vs number of Principal Components

@@ -479,8 +479,7 @@ Illumina and Affymetrix are processed the same from here on in the workflow.
 
 
 
-22. 
-Identify Mosaic Chromosomal Arms
+22. Identify Mosaic Chromosomal Arms
 
 
     * Drops markers within Runs of Homozygosity/homozygous-deletion CNV regions.
