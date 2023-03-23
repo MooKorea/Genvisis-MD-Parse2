@@ -47,7 +47,7 @@ jobs:
 
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "public/fileName.txt"
+          FILE_NAME: "public/documentation.html"
           FILE_DATA: "file content"
         
       - name: Convert MD to HTML
