@@ -18,8 +18,6 @@
 
 > SEEALSO This is a block of content to link to further reading
 
-> SEEALSO This is a block of content to link to further reading
-
 > WARNING This is a warning
 
 &lt;IGNORE-END>
