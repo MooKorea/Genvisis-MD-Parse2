@@ -26,6 +26,7 @@
 &lt;IGNORE-END>
 
 [Example bookmark link](#abcd)
+[Another bookmark link](#anchor)
 
 ## Required Raw Data Files
 
@@ -203,7 +204,7 @@ The Genvisis workflow depends on the platform of your original data and on the t
 
     
 
-
+<a name="anchor"></a>
 
 ### Pedigree and Linker Setup
 
