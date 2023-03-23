@@ -48,6 +48,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Create Empty Documentation File
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "public/documentation.html"
+          FILE_DATA: ""
+
       - name: Convert MD to HTML
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
